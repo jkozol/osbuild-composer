@@ -453,13 +453,72 @@ func (api *API) blueprintsDepsolveHandler(writer http.ResponseWriter, request *h
 	})
 }
 
-func (api *API) blueprintsDiffHandler(writer http.ResponseWriter, request *http.Request, _ httprouter.Params) {
-	var reply struct {
-		Diff []interface{} `json:"diff"`
+func (api *API) blueprintsDiffHandler(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+	type pack struct {
+		Package blueprintPackage `json:"Package"`
 	}
 
-	reply.Diff = make([]interface{}, 0)
-	json.NewEncoder(writer).Encode(reply)
+	type diff struct {
+		New *pack `json:"new"`
+		Old *pack `json:"old"`
+	}
+
+	type reply struct {
+		Diffs []diff `json:"diff"`
+	}
+
+	name := params.ByName("blueprint")
+	if len(name) == 0 {
+		statusResponseError(writer, http.StatusNotFound, "no blueprint name given")
+		return
+	}
+	fromCommit := params.ByName("from")
+	if len(fromCommit) == 0 {
+		statusResponseError(writer, http.StatusNotFound, "no from commit ID given")
+		return
+	}
+	toCommit := params.ByName("to")
+	if len(toCommit) == 0 {
+		statusResponseError(writer, http.StatusNotFound, "no to commit ID given")
+		return
+	}
+
+	var oldBlueprint blueprint
+	if fromCommit == "NEWEST" {
+		if !api.store.getBlueprintCommitted(name, &oldBlueprint) {
+			statusResponseError(writer, http.StatusNotFound)
+			return
+		}
+	} else {
+		statusResponseError(writer, http.StatusNotFound, "invalid from commit ID given")
+		return
+	}
+
+	var newBlueprint blueprint
+	if toCommit == "WORKSPACE" {
+		if !api.store.getBlueprint(name, &newBlueprint, nil) {
+			statusResponseError(writer, http.StatusNotFound)
+			return
+		}
+	} else {
+		statusResponseError(writer, http.StatusNotFound, "invalid to commit ID given")
+		return
+	}
+
+	diffs := []diff{}
+
+	for _, oldPack := range oldBlueprint.Packages {
+		if !packageListContains(newBlueprint.Packages, oldPack) {
+			diffs = append(diffs, diff{New: nil, Old: &pack{oldPack}})
+		}
+	}
+	for _, newPack := range newBlueprint.Packages {
+		if !packageListContains(oldBlueprint.Packages, newPack) {
+			diffs = append(diffs, diff{New: &pack{newPack}, Old: nil})
+		}
+	}
+
+	json.NewEncoder(writer).Encode(reply{diffs})
 }
 
 func (api *API) blueprintsNewHandler(writer http.ResponseWriter, request *http.Request, _ httprouter.Params) {
@@ -540,4 +599,13 @@ func (api *API) composeFailedHandler(writer http.ResponseWriter, request *http.R
 	reply.Failed = make([]interface{}, 0)
 
 	json.NewEncoder(writer).Encode(reply)
+}
+
+func packageListContains(list []blueprintPackage, item blueprintPackage) bool {
+	for _, listItem := range list {
+		if item == listItem {
+			return true
+		}
+	}
+	return false
 }
