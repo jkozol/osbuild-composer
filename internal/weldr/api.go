@@ -308,13 +308,29 @@ func (api *API) modulesListAllHandler(writer http.ResponseWriter, request *http.
 		return
 	}
 
-	total := uint(len(api.packages))
+	var repos []rpmmd.RepoConfig
+	repos = append(repos, api.repo)
+	for _, source := range api.store.GetAllSources() {
+		repos = append(repos, rpmmd.SourceToRepo(source))
+	}
+
+	packages, err := rpmmd.FetchPackageList(repos)
+	if err != nil {
+		errors := responseError{
+			ID:  "ModulesError",
+			Msg: fmt.Sprintf("msg: %s", err.Error()),
+		}
+		statusResponseError(writer, http.StatusBadRequest, errors)
+		return
+	}
+
+	total := uint(len(packages))
 	start := min(offset, total)
 	n := min(limit, total-start)
 
 	modules := make([]modulesListModule, n)
 	for i := uint(0); i < n; i++ {
-		modules[i] = modulesListModule{api.packages[start+i].Name, "rpm"}
+		modules[i] = modulesListModule{packages[start+i].Name, "rpm"}
 	}
 
 	json.NewEncoder(writer).Encode(modulesListReply{
@@ -343,6 +359,22 @@ func (api *API) modulesListHandler(writer http.ResponseWriter, request *http.Req
 		return
 	}
 
+	var repos []rpmmd.RepoConfig
+	repos = append(repos, api.repo)
+	for _, source := range api.store.GetAllSources() {
+		repos = append(repos, rpmmd.SourceToRepo(source))
+	}
+
+	packages, err := rpmmd.FetchPackageList(repos)
+	if err != nil {
+		errors := responseError{
+			ID:  "ModulesError",
+			Msg: fmt.Sprintf("msg: %s", err.Error()),
+		}
+		statusResponseError(writer, http.StatusBadRequest, errors)
+		return
+	}
+
 	// we don't support glob-matching, but cockpit-composer surrounds some
 	// queries with asterisks; this is crude, but solves that case
 	for i := range names {
@@ -353,7 +385,7 @@ func (api *API) modulesListHandler(writer http.ResponseWriter, request *http.Req
 	total := uint(0)
 	end := offset + limit
 	for i, name := range names {
-		for _, pkg := range api.packages {
+		for _, pkg := range packages {
 			if strings.Contains(pkg.Name, name) {
 				total++
 				if total > offset && total < end {
@@ -428,6 +460,22 @@ func (api *API) modulesInfoHandler(writer http.ResponseWriter, request *http.Req
 		return
 	}
 
+	var repos []rpmmd.RepoConfig
+	repos = append(repos, api.repo)
+	for _, source := range api.store.GetAllSources() {
+		repos = append(repos, rpmmd.SourceToRepo(source))
+	}
+
+	packages, err := rpmmd.FetchPackageList(repos)
+	if err != nil {
+		errors := responseError{
+			ID:  "ModulesError",
+			Msg: fmt.Sprintf("msg: %s", err.Error()),
+		}
+		statusResponseError(writer, http.StatusBadRequest, errors)
+		return
+	}
+
 	projects := make([]project, 0)
 	for i, name := range names {
 		// remove leading / from first name
@@ -435,7 +483,7 @@ func (api *API) modulesInfoHandler(writer http.ResponseWriter, request *http.Req
 			name = name[1:]
 		}
 
-		first, n := api.packages.Search(name)
+		first, n := packages.Search(name)
 		if n == 0 {
 			errors := responseError{
 				ID:  "UnknownModule",
@@ -447,7 +495,7 @@ func (api *API) modulesInfoHandler(writer http.ResponseWriter, request *http.Req
 
 		// get basic info from the first package, but collect build
 		// information from all that have the same name
-		pkg := api.packages[first]
+		pkg := packages[first]
 		project := project{
 			Name:        pkg.Name,
 			Summary:     pkg.Summary,
@@ -456,7 +504,7 @@ func (api *API) modulesInfoHandler(writer http.ResponseWriter, request *http.Req
 		}
 
 		project.Builds = make([]build, n)
-		for i, pkg := range api.packages[first : first+n] {
+		for i, pkg := range packages[first : first+n] {
 			project.Builds[i] = build{
 				Arch:      pkg.Arch,
 				BuildTime: pkg.BuildTime,
@@ -610,6 +658,13 @@ func (api *API) blueprintsDepsolveHandler(writer http.ResponseWriter, request *h
 				specs[i] += "-*-*.*"
 			}
 		}
+
+		var repos []rpmmd.RepoConfig
+		repos = append(repos, api.repo)
+		for _, source := range api.store.GetAllSources() {
+			repos = append(repos, rpmmd.SourceToRepo(source))
+		}
+
 		dependencies, _ := api.dnfAdapter.Depsolve(specs, []dnfadapter.RepoConfig{api.repo})
 
 		blueprints = append(blueprints, entry{blueprint, dependencies})
