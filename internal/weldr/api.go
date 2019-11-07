@@ -26,20 +26,18 @@ type API struct {
 
 	dnfAdapter *dnfadapter.DNFAdapter
 	repo       dnfadapter.RepoConfig
-	packages   dnfadapter.PackageList
 
 	logger *log.Logger
 	router *httprouter.Router
 }
 
-func New(dnfAdapter *dnfadapter.DNFAdapter, repo dnfadapter.RepoConfig, packages dnfadapter.PackageList, logger *log.Logger, store *store.Store) *API {
+func New(dnfAdapter *dnfadapter.DNFAdapter, repo dnfadapter.RepoConfig, logger *log.Logger, store *store.Store) *API {
 	// This needs to be shared with the worker API so that they can communicate with each other
 	// builds := make(chan queue.Build, 200)
 	api := &API{
 		store:      store,
 		dnfAdapter: dnfAdapter,
 		repo:       repo,
-		packages:   packages,
 		logger:     logger,
 	}
 
@@ -308,13 +306,13 @@ func (api *API) modulesListAllHandler(writer http.ResponseWriter, request *http.
 		return
 	}
 
-	var repos []rpmmd.RepoConfig
+	var repos []dnfadapter.RepoConfig
 	repos = append(repos, api.repo)
 	for _, source := range api.store.GetAllSources() {
-		repos = append(repos, rpmmd.SourceToRepo(source))
+		repos = append(repos, dnfadapter.SourceToRepo(source))
 	}
 
-	packages, err := rpmmd.FetchPackageList(repos)
+	packages, err := api.dnfAdapter.FetchPackageList(repos)
 	if err != nil {
 		errors := responseError{
 			ID:  "ModulesError",
@@ -359,13 +357,13 @@ func (api *API) modulesListHandler(writer http.ResponseWriter, request *http.Req
 		return
 	}
 
-	var repos []rpmmd.RepoConfig
+	var repos []dnfadapter.RepoConfig
 	repos = append(repos, api.repo)
 	for _, source := range api.store.GetAllSources() {
-		repos = append(repos, rpmmd.SourceToRepo(source))
+		repos = append(repos, dnfadapter.SourceToRepo(source))
 	}
 
-	packages, err := rpmmd.FetchPackageList(repos)
+	packages, err := api.dnfAdapter.FetchPackageList(repos)
 	if err != nil {
 		errors := responseError{
 			ID:  "ModulesError",
@@ -460,13 +458,13 @@ func (api *API) modulesInfoHandler(writer http.ResponseWriter, request *http.Req
 		return
 	}
 
-	var repos []rpmmd.RepoConfig
+	var repos []dnfadapter.RepoConfig
 	repos = append(repos, api.repo)
 	for _, source := range api.store.GetAllSources() {
-		repos = append(repos, rpmmd.SourceToRepo(source))
+		repos = append(repos, dnfadapter.SourceToRepo(source))
 	}
 
-	packages, err := rpmmd.FetchPackageList(repos)
+	packages, err := api.dnfAdapter.FetchPackageList(repos)
 	if err != nil {
 		errors := responseError{
 			ID:  "ModulesError",
@@ -659,10 +657,10 @@ func (api *API) blueprintsDepsolveHandler(writer http.ResponseWriter, request *h
 			}
 		}
 
-		var repos []rpmmd.RepoConfig
+		var repos []dnfadapter.RepoConfig
 		repos = append(repos, api.repo)
 		for _, source := range api.store.GetAllSources() {
-			repos = append(repos, rpmmd.SourceToRepo(source))
+			repos = append(repos, dnfadapter.SourceToRepo(source))
 		}
 
 		dependencies, _ := api.dnfAdapter.Depsolve(specs, []dnfadapter.RepoConfig{api.repo})
