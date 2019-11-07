@@ -157,8 +157,7 @@ func createWeldrAPI(fixture string) (*weldr.API, *store.Store) {
 	s := store.New(nil)
 	dnfAdapter := &dnfadapter.DNFAdapter{DNFJsonPath: "../../test/dnf-mock/dnf-json-mock"}
 	dnfAdapter.ExtraArgs = []string{fixture}
-	packageList, _ := dnfAdapter.FetchPackageList([]dnfadapter.RepoConfig{repo})
-	return weldr.New(dnfAdapter, repo, packageList, nil, s), s
+	return weldr.New(dnfAdapter, repo, nil, s), s
 }
 
 func TestBasic(t *testing.T) {
