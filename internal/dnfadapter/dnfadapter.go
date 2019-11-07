@@ -45,6 +45,15 @@ type DNFAdapter struct {
 	ExtraArgs   []string
 }
 
+type DNFError struct {
+	Kind   string `json:"kind"`
+	Reason string `json:"reason"`
+}
+
+func (err *DNFError) Error() string {
+	return fmt.Sprintf("DNF error occured: %s: %s", err.Kind, err.Reason)
+}
+
 func (d *DNFAdapter) runDNF(command string, arguments interface{}, result interface{}) error {
 	var call = struct {
 		Command   string      `json:"command"`
@@ -85,7 +94,16 @@ func (d *DNFAdapter) runDNF(command string, arguments interface{}, result interf
 		return err
 	}
 
-	return cmd.Wait()
+	err = cmd.Wait()
+
+	const DnfErrorExitCode = 10
+	if runError, ok := err.(*exec.ExitError); ok && runError.ExitCode() == DnfErrorExitCode {
+		dnfError := new(DNFError)
+		err = json.Unmarshal(runError.Stderr, dnfError)
+
+		return dnfError
+	}
+	return err
 }
 
 func (d *DNFAdapter) FetchPackageList(repos []RepoConfig) (PackageList, error) {
