@@ -1,0 +1,41 @@
+#!/usr/bin/python3
+
+import json
+import sys
+from os.path import dirname
+
+DNF_ERROR_EXIT_CODE = 10
+
+
+def main():
+    call = json.load(sys.stdin)
+
+    command = call["command"]
+
+    fixture_name = sys.argv[1]
+
+    # a little bit hacky, but good enough for tests
+    mock_dir = dirname(__file__)
+
+    try:
+        with open(f"{mock_dir}/fixtures/{fixture_name}/{command}.json") as f:
+            fixture = json.load(f)
+    except FileNotFoundError:
+        print(f"cannot find fixture {fixture_name} for command {command}", file=sys.stderr)
+        sys.exit(1)
+
+    if "output" in fixture:
+        json.dump(fixture["output"], sys.stdout)
+
+    elif "error" in fixture:
+        json.dump(fixture["error"], sys.stderr)
+        sys.exit(DNF_ERROR_EXIT_CODE)
+
+    else:
+        print(f"wrong format in fixture {fixture_name} for command {command}", file=sys.stderr)
+        json.dump(fixture, sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

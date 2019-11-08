@@ -13,20 +13,15 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/osbuild/osbuild-composer/internal/rpmmd"
+	"github.com/osbuild/osbuild-composer/internal/dnfadapter"
 	"github.com/osbuild/osbuild-composer/internal/store"
 	"github.com/osbuild/osbuild-composer/internal/weldr"
 )
 
-var repo = rpmmd.RepoConfig{
+var repo = dnfadapter.RepoConfig{
 	Id:      "test",
 	Name:    "Test",
 	BaseURL: "http://example.com/test/os",
-}
-
-var packages = rpmmd.PackageList{
-	{Name: "package1"},
-	{Name: "package2"},
 }
 
 func externalRequest(method, path, body string) *http.Response {
@@ -158,6 +153,14 @@ func testRoute(t *testing.T, api *weldr.API, external bool, method, path, body s
 	}
 }
 
+func createWeldrAPI(fixture string) (*weldr.API, *store.Store) {
+	s := store.New(nil)
+	dnfAdapter := &dnfadapter.DNFAdapter{DNFJsonPath: "../../test/dnf-mock/dnf-json-mock"}
+	dnfAdapter.ExtraArgs = []string{fixture}
+	packageList, _ := dnfAdapter.FetchPackageList([]dnfadapter.RepoConfig{repo})
+	return weldr.New(dnfAdapter, repo, packageList, nil, s), s
+}
+
 func TestBasic(t *testing.T) {
 	var cases = []struct {
 		Path           string
@@ -194,7 +197,7 @@ func TestBasic(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		api := weldr.New(repo, packages, nil, store.New(nil))
+		api, _ := createWeldrAPI("base")
 		testRoute(t, api, true, "GET", c.Path, ``, c.ExpectedStatus, c.ExpectedJSON)
 	}
 }
@@ -211,7 +214,7 @@ func TestBlueprintsNew(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		api := weldr.New(repo, packages, nil, store.New(nil))
+		api, _ := createWeldrAPI("base")
 		testRoute(t, api, true, c.Method, c.Path, c.Body, c.ExpectedStatus, c.ExpectedJSON)
 	}
 }
@@ -228,7 +231,7 @@ func TestBlueprintsWorkspace(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		api := weldr.New(repo, packages, nil, store.New(nil))
+		api, _ := createWeldrAPI("base")
 		sendHTTP(api, true, "POST", "/api/v0/blueprints/new", `{"name":"test","description":"Test","packages":[{"name":"httpd","version":"2.4.*"}],"version":"0.0.0"}`)
 		testRoute(t, api, true, c.Method, c.Path, c.Body, c.ExpectedStatus, c.ExpectedJSON)
 	}
@@ -249,7 +252,7 @@ func TestBlueprintsInfo(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		api := weldr.New(repo, packages, nil, store.New(nil))
+		api, _ := createWeldrAPI("base")
 		sendHTTP(api, true, "POST", "/api/v0/blueprints/new", `{"name":"test1","description":"Test","packages":[{"name":"httpd","version":"2.4.*"}],"version":"0.0.0"}`)
 		sendHTTP(api, true, "POST", "/api/v0/blueprints/new", `{"name":"test2","description":"Test","packages":[{"name":"httpd","version":"2.4.*"}],"version":"0.0.0"}`)
 		sendHTTP(api, true, "POST", "/api/v0/blueprints/workspace", `{"name":"test2","description":"Test","packages":[{"name":"systemd","version":"123"}],"version":"0.0.0"}`)
@@ -271,7 +274,7 @@ func TestBlueprintsDiff(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		api := weldr.New(repo, packages, nil, store.New(nil))
+		api, _ := createWeldrAPI("base")
 		sendHTTP(api, true, "POST", "/api/v0/blueprints/new", `{"name":"test","description":"Test","packages":[{"name":"httpd","version":"2.4.*"}],"version":"0.0.0"}`)
 		sendHTTP(api, true, "POST", "/api/v0/blueprints/workspace", `{"name":"test","description":"Test","packages":[{"name":"systemd","version":"123"}],"version":"0.0.0"}`)
 		testRoute(t, api, true, c.Method, c.Path, c.Body, c.ExpectedStatus, c.ExpectedJSON)
@@ -291,7 +294,7 @@ func TestBlueprintsDelete(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		api := weldr.New(repo, packages, nil, store.New(nil))
+		api, _ := createWeldrAPI("base")
 		sendHTTP(api, true, "POST", "/api/v0/blueprints/new", `{"name":"test","description":"Test","packages":[{"name":"httpd","version":"2.4.*"}],"version":"0.0.0"}`)
 		testRoute(t, api, true, c.Method, c.Path, c.Body, c.ExpectedStatus, c.ExpectedJSON)
 		sendHTTP(api, true, "DELETE", "/api/v0/blueprints/delete/test", ``)
@@ -313,7 +316,7 @@ func TestCompose(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		api := weldr.New(repo, packages, nil, store.New(nil))
+		api, _ := createWeldrAPI("base")
 		sendHTTP(api, c.External, "POST", "/api/v0/blueprints/new", `{"name":"test","description":"Test","packages":[{"name":"httpd","version":"2.4.*"}],"version":"0.0.0"}`)
 		testRoute(t, api, c.External, c.Method, c.Path, c.Body, c.ExpectedStatus, c.ExpectedJSON, c.IgnoreFields...)
 		sendHTTP(api, c.External, "DELETE", "/api/v0/blueprints/delete/test", ``)
@@ -337,8 +340,7 @@ func TestComposeQueue(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		s := store.New(nil)
-		api := weldr.New(repo, packages, nil, s)
+		api, s := createWeldrAPI("base")
 		sendHTTP(api, false, "POST", "/api/v0/blueprints/new", `{"name":"test","description":"Test","packages":[{"name":"httpd","version":"2.4.*"}],"version":"0.0.0"}`)
 		// create job and leave it waiting
 		sendHTTP(api, false, "POST", "/api/v0/compose", `{"blueprint_name": "test","compose_type": "tar","branch": "master"}`)
@@ -372,7 +374,7 @@ func TestSourcesNew(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		api := weldr.New(repo, packages, nil, store.New(nil))
+		api, _ := createWeldrAPI("base")
 		testRoute(t, api, true, c.Method, c.Path, c.Body, c.ExpectedStatus, c.ExpectedJSON)
 		sendHTTP(api, true, "DELETE", "/api/v0/projects/source/delete/fish", ``)
 	}
@@ -391,7 +393,7 @@ func TestSourcesDelete(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		api := weldr.New(repo, packages, nil, store.New(nil))
+		api, _ := createWeldrAPI("base")
 		sendHTTP(api, true, "POST", "/api/v0/projects/source/new", `{"name": "fish","url": "https://download.opensuse.org/repositories/shells:/fish:/release:/3/Fedora_29/","type": "yum-baseurl","check_ssl": false,"check_gpg": false}`)
 		testRoute(t, api, true, c.Method, c.Path, c.Body, c.ExpectedStatus, c.ExpectedJSON)
 		sendHTTP(api, true, "DELETE", "/api/v0/projects/source/delete/fish", ``)

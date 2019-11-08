@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
+	"github.com/osbuild/osbuild-composer/internal/dnfadapter"
 	"github.com/osbuild/osbuild-composer/internal/jobqueue"
-	"github.com/osbuild/osbuild-composer/internal/rpmmd"
 	"github.com/osbuild/osbuild-composer/internal/store"
 	"github.com/osbuild/osbuild-composer/internal/weldr"
 
@@ -32,13 +32,15 @@ func main() {
 	weldrListener := listeners[0]
 	jobListener := listeners[1]
 
-	repo := rpmmd.RepoConfig{
+	repo := dnfadapter.RepoConfig{
 		Id:       "fedora",
 		Name:     "Fedora 30",
 		Metalink: "https://mirrors.fedoraproject.org/metalink?repo=fedora-30&arch=x86_64",
 	}
 
-	packages, err := rpmmd.FetchPackageList([]rpmmd.RepoConfig{repo})
+	dnfAdapter := &dnfadapter.DNFAdapter{DNFJsonPath: "dnf-json"}
+
+	packages, err := dnfAdapter.FetchPackageList([]dnfadapter.RepoConfig{repo})
 	if err != nil {
 		panic(err)
 	}
@@ -56,7 +58,7 @@ func main() {
 	store := store.New(&stateFile)
 
 	jobAPI := jobqueue.New(logger, store)
-	weldrAPI := weldr.New(repo, packages, logger, store)
+	weldrAPI := weldr.New(dnfAdapter, repo, packages, logger, store)
 
 	go jobAPI.Serve(jobListener)
 	weldrAPI.Serve(weldrListener)

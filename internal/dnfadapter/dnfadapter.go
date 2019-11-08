@@ -1,7 +1,8 @@
-package rpmmd
+package dnfadapter
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"os/exec"
 	"sort"
@@ -39,7 +40,12 @@ type PackageSpec struct {
 	Arch    string `json:"arch,omitempty"`
 }
 
-func runDNF(command string, arguments interface{}, result interface{}) error {
+type DNFAdapter struct {
+	DNFJsonPath string
+	ExtraArgs   []string
+}
+
+func (d *DNFAdapter) runDNF(command string, arguments interface{}, result interface{}) error {
 	var call = struct {
 		Command   string      `json:"command"`
 		Arguments interface{} `json:"arguments,omitempty"`
@@ -48,7 +54,9 @@ func runDNF(command string, arguments interface{}, result interface{}) error {
 		arguments,
 	}
 
-	cmd := exec.Command("python3", "dnf-json")
+	args := append([]string{d.DNFJsonPath}, d.ExtraArgs...)
+
+	cmd := exec.Command("python3", args...)
 
 	stdin, err := cmd.StdinPipe()
 	if err != nil {
@@ -80,22 +88,22 @@ func runDNF(command string, arguments interface{}, result interface{}) error {
 	return cmd.Wait()
 }
 
-func FetchPackageList(repos []RepoConfig) (PackageList, error) {
+func (d *DNFAdapter) FetchPackageList(repos []RepoConfig) (PackageList, error) {
 	var arguments = struct {
 		Repos []RepoConfig `json:"repos"`
 	}{repos}
 	var packages PackageList
-	err := runDNF("dump", arguments, &packages)
+	err := d.runDNF("dump", arguments, &packages)
 	return packages, err
 }
 
-func Depsolve(specs []string, repos []RepoConfig) ([]PackageSpec, error) {
+func (d *DNFAdapter) Depsolve(specs []string, repos []RepoConfig) ([]PackageSpec, error) {
 	var arguments = struct {
 		PackageSpecs []string     `json:"package-specs"`
 		Repos        []RepoConfig `json:"repos"`
 	}{specs, repos}
 	var dependencies []PackageSpec
-	err := runDNF("depsolve", arguments, &dependencies)
+	err := d.runDNF("depsolve", arguments, &dependencies)
 	return dependencies, err
 }
 

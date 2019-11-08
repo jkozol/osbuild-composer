@@ -1,0 +1,10 @@
+{
+  "output": [
+    {
+      "name": "package1"
+    },
+    {
+      "name": "package2"
+    }
+  ]
+}

@@ -14,7 +14,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 
 	"github.com/osbuild/osbuild-composer/internal/blueprint"
-	"github.com/osbuild/osbuild-composer/internal/rpmmd"
+	"github.com/osbuild/osbuild-composer/internal/dnfadapter"
 	"github.com/osbuild/osbuild-composer/internal/store"
 
 	"github.com/osbuild/osbuild-composer/internal/distro"
@@ -24,21 +24,23 @@ import (
 type API struct {
 	store *store.Store
 
-	repo     rpmmd.RepoConfig
-	packages rpmmd.PackageList
+	dnfAdapter *dnfadapter.DNFAdapter
+	repo       dnfadapter.RepoConfig
+	packages   dnfadapter.PackageList
 
 	logger *log.Logger
 	router *httprouter.Router
 }
 
-func New(repo rpmmd.RepoConfig, packages rpmmd.PackageList, logger *log.Logger, store *store.Store) *API {
+func New(dnfAdapter *dnfadapter.DNFAdapter, repo dnfadapter.RepoConfig, packages dnfadapter.PackageList, logger *log.Logger, store *store.Store) *API {
 	// This needs to be shared with the worker API so that they can communicate with each other
 	// builds := make(chan queue.Build, 200)
 	api := &API{
-		store:    store,
-		repo:     repo,
-		packages: packages,
-		logger:   logger,
+		store:      store,
+		dnfAdapter: dnfAdapter,
+		repo:       repo,
+		packages:   packages,
+		logger:     logger,
 	}
 
 	api.router = httprouter.New()
@@ -398,12 +400,12 @@ func (api *API) modulesInfoHandler(writer http.ResponseWriter, request *http.Req
 		Source    source    `json:"source"`
 	}
 	type project struct {
-		Name         string              `json:"name"`
-		Summary      string              `json:"summary"`
-		Description  string              `json:"description"`
-		Homepage     string              `json:"homepage"`
-		Builds       []build             `json:"builds"`
-		Dependencies []rpmmd.PackageSpec `json:"dependencies,omitempty"`
+		Name         string                   `json:"name"`
+		Summary      string                   `json:"summary"`
+		Description  string                   `json:"description"`
+		Homepage     string                   `json:"homepage"`
+		Builds       []build                  `json:"builds"`
+		Dependencies []dnfadapter.PackageSpec `json:"dependencies,omitempty"`
 	}
 	type projectsReply struct {
 		Projects []project `json:"projects"`
@@ -465,7 +467,7 @@ func (api *API) modulesInfoHandler(writer http.ResponseWriter, request *http.Req
 		}
 
 		if modulesRequested {
-			project.Dependencies, _ = rpmmd.Depsolve([]string{pkg.Name}, []rpmmd.RepoConfig{api.repo})
+			project.Dependencies, _ = api.dnfAdapter.Depsolve([]string{pkg.Name}, []dnfadapter.RepoConfig{api.repo})
 		}
 
 		projects = append(projects, project)
@@ -562,8 +564,8 @@ func (api *API) blueprintsInfoHandler(writer http.ResponseWriter, request *http.
 
 func (api *API) blueprintsDepsolveHandler(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
 	type entry struct {
-		Blueprint    blueprint.Blueprint `json:"blueprint"`
-		Dependencies []rpmmd.PackageSpec `json:"dependencies"`
+		Blueprint    blueprint.Blueprint      `json:"blueprint"`
+		Dependencies []dnfadapter.PackageSpec `json:"dependencies"`
 	}
 	type reply struct {
 		Blueprints []entry         `json:"blueprints"`
@@ -608,7 +610,7 @@ func (api *API) blueprintsDepsolveHandler(writer http.ResponseWriter, request *h
 				specs[i] += "-*-*.*"
 			}
 		}
-		dependencies, _ := rpmmd.Depsolve(specs, []rpmmd.RepoConfig{api.repo})
+		dependencies, _ := api.dnfAdapter.Depsolve(specs, []dnfadapter.RepoConfig{api.repo})
 
 		blueprints = append(blueprints, entry{blueprint, dependencies})
 	}
