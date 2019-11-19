@@ -79,6 +79,7 @@ func New(rpmmd rpmmd.RPMMD, repo rpmmd.RepoConfig, logger *log.Logger, store *st
 	api.router.DELETE("/api/v0/blueprints/workspace/:blueprint", api.blueprintDeleteWorkspaceHandler)
 
 	api.router.POST("/api/v0/compose", api.composeHandler)
+	api.router.POST("/api/v1/compose", api.composeHandler)
 	api.router.GET("/api/v0/compose/types", api.composeTypesHandler)
 	api.router.GET("/api/v0/compose/queue", api.composeQueueHandler)
 	api.router.GET("/api/v0/compose/status/:uuids", api.composeStatusHandler)
@@ -998,19 +999,27 @@ func (api *API) blueprintDeleteWorkspaceHandler(writer http.ResponseWriter, requ
 
 // Schedule new compose by first translating the appropriate blueprint into a pipeline and then
 // pushing it into the channel for waiting builds.
-func (api *API) composeHandler(writer http.ResponseWriter, httpRequest *http.Request, _ httprouter.Params) {
+func (api *API) composeHandler(writer http.ResponseWriter, request *http.Request, _ httprouter.Params) {
 	// https://weldr.io/lorax/pylorax.api.html#pylorax.api.v0.v0_compose_start
-	type ComposeRequest struct {
-		BlueprintName string `json:"blueprint_name"`
-		ComposeType   string `json:"compose_type"`
-		Branch        string `json:"branch"`
-	}
-	type ComposeReply struct {
-		BuildID uuid.UUID `json:"build_id"`
-		Status  bool      `json:"status"`
+	type UploadRequest struct {
+		ImageName string                 `json:"image_name"`
+		Provider  string                 `json:"provider"`
+		Settings  map[string]interface{} `json:"settings"`
 	}
 
-	contentType := httpRequest.Header["Content-Type"]
+	type ComposeRequest struct {
+		BlueprintName string        `json:"blueprint_name"`
+		ComposeType   string        `json:"compose_type"`
+		Branch        string        `json:"branch"`
+		Upload        UploadRequest `json:"upload"`
+	}
+	type ComposeReply struct {
+		BuildID  uuid.UUID  `json:"build_id"`
+		UploadID *uuid.UUID `json:"upload_id,omitempty"`
+		Status   bool       `json:"status"`
+	}
+
+	contentType := request.Header["Content-Type"]
 	if len(contentType) != 1 || contentType[0] != "application/json" {
 		errors := responseError{
 			ID:  "MissingPost",
@@ -1021,7 +1030,7 @@ func (api *API) composeHandler(writer http.ResponseWriter, httpRequest *http.Req
 	}
 
 	var cr ComposeRequest
-	err := json.NewDecoder(httpRequest.Body).Decode(&cr)
+	err := json.NewDecoder(request.Body).Decode(&cr)
 	if err != nil {
 		errors := responseError{
 			Code: http.StatusNotFound,
@@ -1062,6 +1071,12 @@ func (api *API) composeHandler(writer http.ResponseWriter, httpRequest *http.Req
 		}
 		statusResponseError(writer, http.StatusBadRequest, errors)
 		return
+	}
+
+	v1Route := strings.HasPrefix(request.URL.Path, "/api/v1/")
+
+	if v1Route {
+
 	}
 
 	json.NewEncoder(writer).Encode(reply)
