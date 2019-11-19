@@ -354,7 +354,7 @@ func TestComposeUpload(t *testing.T) {
 		ExpectedJSON   string
 		IgnoreFields   []string
 	}{
-		{false, "POST", "/api/v1/compose", `{"blueprint_name": "test","compose_type": "tar","branch": "master","upload": {"image_name": "My Image","provider": "azure","settings": {"resource_group": "SOMEBODY","storage_account_name": "ONCE"}}}`, http.StatusOK, `{"status": true}`, []string{"build_id"}},
+		{false, "POST", "/api/v1/compose", `{"blueprint_name": "test","compose_type": "ami","branch": "master","upload": {"image_name": "My Image","provider": "aws","settings": {"aws_access_key": "MYKEY","aws_secret_key": "MYSECRET", "aws_region":"MYREGION", "aws_bucket":"MYBUCKET"}}}`, http.StatusOK, `{"status": true}`, []string{"build_id"}},
 	}
 
 	for _, c := range cases {
