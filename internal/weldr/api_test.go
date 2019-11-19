@@ -344,6 +344,27 @@ func TestCompose(t *testing.T) {
 	}
 }
 
+func TestComposeUpload(t *testing.T) {
+	var cases = []struct {
+		External       bool
+		Method         string
+		Path           string
+		Body           string
+		ExpectedStatus int
+		ExpectedJSON   string
+		IgnoreFields   []string
+	}{
+		{false, "POST", "/api/v1/compose", `{"blueprint_name": "test","compose_type": "tar","branch": "master","upload": {"image_name": "My Image","provider": "azure","settings": {"resource_group": "SOMEBODY","storage_account_name": "ONCE"}}}`, http.StatusOK, `{"status": true}`, []string{"build_id"}},
+	}
+
+	for _, c := range cases {
+		api, _ := createWeldrAPI(rpmmd_mock.BaseFixture)
+		sendHTTP(api, c.External, "POST", "/api/v0/blueprints/new", `{"name":"test","description":"Test","packages":[{"name":"httpd","version":"2.4.*"}],"version":"0.0.0"}`)
+		testRoute(t, api, c.External, c.Method, c.Path, c.Body, c.ExpectedStatus, c.ExpectedJSON, c.IgnoreFields...)
+		sendHTTP(api, c.External, "DELETE", "/api/v0/blueprints/delete/test", ``)
+	}
+}
+
 func TestComposeQueue(t *testing.T) {
 	var cases = []struct {
 		Method         string
