@@ -1249,7 +1249,7 @@ func (api *API) composeHandler(writer http.ResponseWriter, request *http.Request
 	bp := api.store.GetBlueprintCommitted(cr.BlueprintName)
 
 	size := cr.Size
-	
+
 	// Microsoft Azure requires vhd images to be rounded up to the nearest MB
 	if cr.ComposeType == "vhd" && size%MegaByte != 0 {
 		size = (size/MegaByte + 1) * MegaByte
@@ -1472,7 +1472,7 @@ func (api *API) composeInfoHandler(writer http.ResponseWriter, request *http.Req
 		Deps        Dependencies         `json:"deps"`      // empty for now
 		ComposeType string               `json:"compose_type"`
 		QueueStatus string               `json:"queue_status"`
-		ImageSize   int64                `json:"image_size"`
+		ImageSize   uint64               `json:"image_size"`
 		Uploads     []UploadResponse     `json:"uploads,omitempty"`
 	}
 
@@ -1484,7 +1484,7 @@ func (api *API) composeInfoHandler(writer http.ResponseWriter, request *http.Req
 	reply.ComposeType = compose.OutputType
 	reply.QueueStatus = compose.QueueStatus
 	if compose.Image != nil {
-		reply.ImageSize = compose.Image.Size
+		reply.ImageSize = compose.Size
 	}
 
 	if isRequestVersionAtLeast(params, 1) {
