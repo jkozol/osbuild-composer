@@ -12,6 +12,10 @@ type TarAssemblerOptions struct {
 
 func (TarAssemblerOptions) isAssemblerOptions() {}
 
+func (options *TarAssemblerOptions) GetImageSize() uint64 {
+	return options.Size
+}
+
 // NewTarAssemblerOptions creates a new TarAssemblerOptions object, with the
 // mandatory options set.
 func NewTarAssemblerOptions(filename string, size uint64) *TarAssemblerOptions {

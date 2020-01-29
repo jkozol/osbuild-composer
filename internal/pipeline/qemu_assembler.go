@@ -34,6 +34,10 @@ type QEMUFilesystem struct {
 
 func (QEMUAssemblerOptions) isAssemblerOptions() {}
 
+func (options *QEMUAssemblerOptions) GetImageSize() uint64 {
+	return options.Size
+}
+
 // NewQEMUAssembler creates a new QEMU Assembler object.
 func NewQEMUAssembler(options *QEMUAssemblerOptions) *Assembler {
 	return &Assembler{

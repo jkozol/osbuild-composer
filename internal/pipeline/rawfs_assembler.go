@@ -13,6 +13,10 @@ type RawFSAssemblerOptions struct {
 
 func (RawFSAssemblerOptions) isAssemblerOptions() {}
 
+func (options *RawFSAssemblerOptions) GetImageSize() uint64 {
+	return options.Size
+}
+
 // NewRawFSAssembler creates a new RawFS Assembler object.
 func NewRawFSAssembler(options *RawFSAssemblerOptions) *Assembler {
 	return &Assembler{

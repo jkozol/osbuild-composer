@@ -14,6 +14,7 @@ type Assembler struct {
 // AssemblerOptions specify the operations of a given assembler-type.
 type AssemblerOptions interface {
 	isAssemblerOptions()
+	GetImageSize() uint64
 }
 
 type rawAssembler struct {

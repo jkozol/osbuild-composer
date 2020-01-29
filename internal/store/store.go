@@ -468,6 +468,11 @@ func (s *Store) PushCompose(composeID uuid.UUID, bp *blueprint.Blueprint, checks
 	if err != nil {
 		return err
 	}
+
+	if pipeline.Assembler != nil {
+		size = pipeline.Assembler.Options.GetImageSize()
+	}
+
 	s.change(func() error {
 		s.Composes[composeID] = Compose{
 			QueueStatus: "WAITING",
