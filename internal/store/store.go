@@ -24,7 +24,7 @@ import (
 	"github.com/osbuild/osbuild-composer/internal/blueprint"
 	"github.com/osbuild/osbuild-composer/internal/common"
 	"github.com/osbuild/osbuild-composer/internal/distro"
-	"github.com/osbuild/osbuild-composer/internal/pipeline"
+	"github.com/osbuild/osbuild-composer/internal/osbuild"
 	"github.com/osbuild/osbuild-composer/internal/rpmmd"
 	"github.com/osbuild/osbuild-composer/internal/target"
 
@@ -53,7 +53,7 @@ type Compose struct {
 	QueueStatus string               `json:"queue_status"`
 	Blueprint   *blueprint.Blueprint `json:"blueprint"`
 	OutputType  string               `json:"output-type"`
-	Pipeline    *pipeline.Pipeline   `json:"pipeline"`
+	Pipeline    *osbuild.Pipeline    `json:"pipeline"`
 	Targets     []*target.Target     `json:"targets"`
 	JobCreated  time.Time            `json:"job_created"`
 	JobStarted  time.Time            `json:"job_started"`
@@ -66,7 +66,7 @@ type Compose struct {
 type Job struct {
 	ComposeID  uuid.UUID
 	Distro     string
-	Pipeline   *pipeline.Pipeline
+	Pipeline   *osbuild.Pipeline
 	Targets    []*target.Target
 	OutputType string
 }

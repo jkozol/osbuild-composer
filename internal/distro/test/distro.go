@@ -4,7 +4,7 @@ import (
 	"errors"
 
 	"github.com/osbuild/osbuild-composer/internal/blueprint"
-	"github.com/osbuild/osbuild-composer/internal/pipeline"
+	"github.com/osbuild/osbuild-composer/internal/osbuild"
 	"github.com/osbuild/osbuild-composer/internal/rpmmd"
 )
 
@@ -46,9 +46,9 @@ func (r *TestDistro) GetSizeForOutputType(outputFormat string, size uint64) uint
 	return 0
 }
 
-func (d *TestDistro) Pipeline(b *blueprint.Blueprint, additionalRepos []rpmmd.RepoConfig, checksums map[string]string, outputArch, outputFormat string, size uint64) (*pipeline.Pipeline, error) {
+func (d *TestDistro) Pipeline(b *blueprint.Blueprint, additionalRepos []rpmmd.RepoConfig, checksums map[string]string, outputArch, outputFormat string, size uint64) (*osbuild.Pipeline, error) {
 	if outputFormat == "test_output" && outputArch == "test_arch" {
-		return &pipeline.Pipeline{}, nil
+		return &osbuild.Pipeline{}, nil
 	} else {
 		return nil, errors.New("invalid output format or arch: " + outputFormat + " @ " + outputArch)
 	}

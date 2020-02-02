@@ -11,18 +11,18 @@ import (
 
 	"github.com/osbuild/osbuild-composer/internal/common"
 	"github.com/osbuild/osbuild-composer/internal/distro"
-	"github.com/osbuild/osbuild-composer/internal/pipeline"
+	"github.com/osbuild/osbuild-composer/internal/osbuild"
 	"github.com/osbuild/osbuild-composer/internal/store"
 	"github.com/osbuild/osbuild-composer/internal/target"
 	"github.com/osbuild/osbuild-composer/internal/upload/awsupload"
 )
 
 type Job struct {
-	ID         uuid.UUID          `json:"id"`
-	Distro     string             `json:"distro"`
-	Pipeline   *pipeline.Pipeline `json:"pipeline"`
-	Targets    []*target.Target   `json:"targets"`
-	OutputType string             `json:"output_type"`
+	ID         uuid.UUID         `json:"id"`
+	Distro     string            `json:"distro"`
+	Pipeline   *osbuild.Pipeline `json:"pipeline"`
+	Targets    []*target.Target  `json:"targets"`
+	OutputType string            `json:"output_type"`
 }
 
 type JobStatus struct {
@@ -52,7 +52,7 @@ func (job *Job) Run() (*store.Image, *common.ComposeResult, error) {
 		return nil, nil, fmt.Errorf("unknown distro: %s", job.Distro)
 	}
 
-	build := pipeline.Build{
+	build := osbuild.Build{
 		Runner: d.Runner(),
 	}
 
