@@ -457,7 +457,7 @@ func (s *Store) GetComposeResult(id uuid.UUID) (io.ReadCloser, error) {
 	return os.Open(*s.stateDir + "/outputs/" + id.String() + "/result.json")
 }
 
-func (s *Store) PushCompose(composeID uuid.UUID, bp *blueprint.Blueprint, checksums map[string]string, arch, composeType string, size uint64, uploadTarget *target.Target) error {
+func (s *Store) PushCompose(composeID uuid.UUID, bp *blueprint.Blueprint, packages, buildPackages []rpmmd.PackageSpec, checksums map[string]string, arch, composeType string, size uint64, uploadTarget *target.Target) error {
 	targets := []*target.Target{}
 
 	if s.stateDir != nil {
@@ -486,7 +486,7 @@ func (s *Store) PushCompose(composeID uuid.UUID, bp *blueprint.Blueprint, checks
 
 	size = s.distro.GetSizeForOutputType(composeType, size)
 
-	pipeline, err := s.distro.Pipeline(bp, repos, checksums, arch, composeType, size)
+	pipeline, err := s.distro.Pipeline(bp, repos, packages, buildPackages, checksums, arch, composeType, size)
 	if err != nil {
 		return err
 	}

@@ -26,7 +26,7 @@ func TestDistro_Pipeline(t *testing.T) {
 			Blueprint    *blueprint.Blueprint `json:"blueprint"`
 		}
 		var tt struct {
-			Compose  *compose           `json:"compose"`
+			Compose  *compose          `json:"compose"`
 			Pipeline *osbuild.Pipeline `json:"pipeline,omitempty"`
 		}
 		file, err := ioutil.ReadFile(pipelinePath + fileInfo.Name())
@@ -49,7 +49,7 @@ func TestDistro_Pipeline(t *testing.T) {
 				return
 			}
 			size := d.GetSizeForOutputType(tt.Compose.OutputFormat, 0)
-			got, err := d.Pipeline(tt.Compose.Blueprint, nil, tt.Compose.Checksums, tt.Compose.Arch, tt.Compose.OutputFormat, size)
+			got, err := d.Pipeline(tt.Compose.Blueprint, nil, nil, nil, tt.Compose.Checksums, tt.Compose.Arch, tt.Compose.OutputFormat, size)
 			if (err != nil) != (tt.Pipeline == nil) {
 				t.Errorf("distro.Pipeline() error = %v", err)
 				return
