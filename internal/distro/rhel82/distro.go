@@ -602,6 +602,10 @@ func (r *RHEL82) Pipeline(b *blueprint.Blueprint, additionalRepos []rpmmd.RepoCo
 	return p, nil
 }
 
+func (r *RHEL82) Sources(packages []rpmmd.PackageSpec) *osbuild.Sources {
+	return &osbuild.Sources{}
+}
+
 func (r *RHEL82) Runner() string {
 	return "org.osbuild.rhel82"
 }
