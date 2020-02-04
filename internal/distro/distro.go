@@ -20,6 +20,10 @@ type Distro interface {
 	// passed to New().
 	Name() string
 
+	// Returns the module platform id of the distro. This is used by DNF
+	// for modularity support.
+	ModulePlatformID() string
+
 	// Returns a list of repositories from which this distribution gets its
 	// content.
 	Repositories(arch string) []rpmmd.RepoConfig

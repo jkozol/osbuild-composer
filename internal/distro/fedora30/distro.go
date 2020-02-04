@@ -41,6 +41,7 @@ type output struct {
 }
 
 const Name = "fedora-30"
+const ModulePlatformID = "platform:f30"
 
 func New(confPaths []string) *Fedora30 {
 	const GigaByte = 1024 * 1024 * 1024
@@ -58,7 +59,7 @@ func New(confPaths []string) *Fedora30 {
 
 	repos, exists := repoMap["x86_64"]
 	if !exists {
-		log.Printf("Could not load architecture-specific repository data for x86_64 (%s): %s", Name, err.Error())
+		log.Printf("Could not load architecture-specific repository data for x86_64 (%s)", Name)
 	} else {
 		r.arches["x86_64"] = arch{
 			Name: "x86_64",
@@ -74,7 +75,7 @@ func New(confPaths []string) *Fedora30 {
 
 	repos, exists = repoMap["aarch64"]
 	if !exists {
-		log.Printf("Could not load architecture-specific repository data for x86_64 (%s): %s", Name, err.Error())
+		log.Printf("Could not load architecture-specific repository data for aarch64 (%s)", Name)
 	} else {
 		r.arches["aarch64"] = arch{
 			Name: "aarch64",
@@ -301,6 +302,10 @@ func (r *Fedora30) Name() string {
 	return Name
 }
 
+func (r *Fedora30) ModulePlatformID() string {
+	return ModulePlatformID
+}
+
 func (r *Fedora30) Repositories(arch string) []rpmmd.RepoConfig {
 	return r.arches[arch].Repositories
 }
@@ -438,7 +443,7 @@ func (r *Fedora30) dnfStageOptions(arch arch, additionalRepos []rpmmd.RepoConfig
 	options := &osbuild.DNFStageOptions{
 		ReleaseVersion:   "30",
 		BaseArchitecture: arch.Name,
-		ModulePlatformId: "platform:f30",
+		ModulePlatformId: ModulePlatformID,
 	}
 
 	for _, repo := range append(arch.Repositories, additionalRepos...) {

@@ -11,6 +11,7 @@ import (
 type TestDistro struct{}
 
 const Name = "test-distro"
+const ModulePlatformID = "platform:test"
 
 func New() *TestDistro {
 	return &TestDistro{}
@@ -18,6 +19,10 @@ func New() *TestDistro {
 
 func (d *TestDistro) Name() string {
 	return Name
+}
+
+func (d *TestDistro) ModulePlatformID() string {
+	return ModulePlatformID
 }
 
 func (d *TestDistro) Repositories(arch string) []rpmmd.RepoConfig {
@@ -37,9 +42,9 @@ func (d *TestDistro) ListOutputFormats() []string {
 func (d *TestDistro) FilenameFromType(outputFormat string) (string, string, error) {
 	if outputFormat == "test_format" {
 		return "test.img", "application/x-test", nil
-	} else {
-		return "", "", errors.New("invalid output format: " + outputFormat)
 	}
+
+	return "", "", errors.New("invalid output format: " + outputFormat)
 }
 
 func (r *TestDistro) GetSizeForOutputType(outputFormat string, size uint64) uint64 {
@@ -49,9 +54,9 @@ func (r *TestDistro) GetSizeForOutputType(outputFormat string, size uint64) uint
 func (d *TestDistro) Pipeline(b *blueprint.Blueprint, additionalRepos []rpmmd.RepoConfig, checksums map[string]string, outputArch, outputFormat string, size uint64) (*osbuild.Pipeline, error) {
 	if outputFormat == "test_output" && outputArch == "test_arch" {
 		return &osbuild.Pipeline{}, nil
-	} else {
-		return nil, errors.New("invalid output format or arch: " + outputFormat + " @ " + outputArch)
 	}
+
+	return nil, errors.New("invalid output format or arch: " + outputFormat + " @ " + outputArch)
 }
 
 func (d *TestDistro) Runner() string {
