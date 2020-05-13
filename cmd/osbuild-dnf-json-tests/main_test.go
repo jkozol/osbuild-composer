@@ -33,7 +33,7 @@ func TestFetchChecksum(t *testing.T) {
 	repoCfg := rpmmd.RepoConfig{
 		Id:        "repo",
 		BaseURL:   fmt.Sprintf("file://%s", dir),
-		IgnoreSSL: true,
+		SSLVerify: false,
 	}
 	rpmMetadata := rpmmd.NewRPMMD(path.Join(dir, "rpmmd"))
 	_, c, err := rpmMetadata.FetchMetadata([]rpmmd.RepoConfig{repoCfg}, "platform:f31", "x86_64")
