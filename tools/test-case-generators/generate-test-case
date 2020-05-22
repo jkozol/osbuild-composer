@@ -43,7 +43,8 @@ def run_osbuild(manifest, store, output):
                     "--json", "-"],
                    check=True,
                    encoding="utf-8",
-                   input=json.dumps(manifest))
+                   input=json.dumps(manifest),
+                   stdout=subprocess.PIPE)
 
 
 def main(test_case, store):
