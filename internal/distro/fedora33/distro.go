@@ -597,6 +597,7 @@ func New() distro.Distro {
 			return ostreeCommitAssembler(options, arch)
 		},
 	}
+
 	amiImgType := imageType{
 		name:     "ami",
 		filename: "image.raw",
@@ -615,6 +616,9 @@ func New() distro.Distro {
 		},
 		excludedPackages: []string{
 			"dracut-config-rescue",
+			"geolite2-city",
+			"geolite2-country",
+			"zram-generator-defaults",
 		},
 		enabledServices: []string{
 			"cloud-init.service",

@@ -241,6 +241,9 @@ func TestImageType_BasePackages(t *testing.T) {
 			},
 			excludedPackages: []string{
 				"dracut-config-rescue",
+				"geolite2-city",
+				"geolite2-country",
+				"zram-generator-defaults",
 			},
 			bootable: true,
 		},
