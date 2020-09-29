@@ -684,6 +684,9 @@ func New() distro.Distro {
 		},
 		excludedPackages: []string{
 			"dracut-config-rescue",
+			"geolite2-city",
+			"geolite2-country",
+			"zram-generator-defaults",
 		},
 		enabledServices: []string{
 			"cloud-init.service",
@@ -691,9 +694,8 @@ func New() distro.Distro {
 			"cloud-final.service",
 			"cloud-init-local.service",
 		},
-		kernelOptions: "ro biosdevname=0 net.ifnames=0",
-		bootable:      true,
-		defaultSize:   2 * GigaByte,
+		bootable:    true,
+		defaultSize: 2 * GigaByte,
 		assembler: func(uefi bool, options distro.ImageOptions, arch distro.Arch) *osbuild.Assembler {
 			return qemuAssembler("qcow2", "disk.qcow2", uefi, options)
 		},
