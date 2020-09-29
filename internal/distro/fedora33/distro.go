@@ -720,6 +720,9 @@ func New() distro.Distro {
 		},
 		excludedPackages: []string{
 			"dracut-config-rescue",
+			"geolite2-city",
+			"geolite2-country",
+			"zram-generator-defaults",
 		},
 		enabledServices: []string{
 			"sshd",
