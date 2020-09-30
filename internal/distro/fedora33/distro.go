@@ -592,7 +592,7 @@ func New() distro.Distro {
 			"NetworkManager.service", "firewalld.service", "rngd.service", "sshd.service",
 			"zezere_ignition.timer", "zezere_ignition_banner.service",
 			"greenboot-grub2-set-counter", "greenboot-grub2-set-success", "greenboot-healthcheck", "greenboot-rpm-ostree-grub2-check-fallback",
-			"greenboot-status", "greenboot-task-runner", "redboot-auto-reboot", "edboot-task-runner",
+			"greenboot-status", "greenboot-task-runner", "redboot-auto-reboot", "redboot-task-runner",
 			"parsec", "dbus-parsec",
 		},
 		rpmOstree: true,
