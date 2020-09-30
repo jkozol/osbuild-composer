@@ -1,7 +1,11 @@
 {
+  "boot": {
+    "type": "openstack"
+  },
   "compose-request": {
     "distro": "fedora-33",
     "arch": "x86_64",
+    "image-type": "openstack",
     "repositories": [
       {
         "baseurl": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/",
@@ -9,76 +13,20 @@
         "check_gpg": true
       }
     ],
-    "image-type": "qcow2",
     "filename": "disk.qcow2",
     "blueprint": {
-      "packages": [
-        {
-          "name": "bash",
-          "version": "*"
-        }
-      ],
-      "groups": [
-        {
-          "name": "core"
-        }
-      ],
+      "name": "openstack-boot-test",
+      "description": "Image for boot test",
+      "packages": [],
+      "modules": [],
+      "groups": [],
       "customizations": {
-        "hosname": "my-host",
-        "kernel": {
-          "append": "debug"
-        },
-        "sshkey": [
-          {
-            "user": "user1",
-            "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC61wMCjOSHwbVb4VfVyl5sn497qW4PsdQ7Ty7aD6wDNZ/QjjULkDV/yW5WjDlDQ7UqFH0Sr7vywjqDizUAqK7zM5FsUKsUXWHWwg/ehKg8j9xKcMv11AkFoUoujtfAujnKODkk58XSA9whPr7qcw3vPrmog680pnMSzf9LC7J6kXfs6lkoKfBh9VnlxusCrw2yg0qI1fHAZBLPx7mW6+me71QZsS6sVz8v8KXyrXsKTdnF50FjzHcK9HXDBtSJS5wA3fkcRYymJe0o6WMWNdgSRVpoSiWaHHmFgdMUJaYoCfhXzyl7LtNb3Q+Sveg+tJK7JaRXBLMUllOlJ6ll5Hod root@localhost"
-          }
-        ],
         "user": [
           {
-            "name": "user2",
-            "description": "description 2",
-            "password": "$6$BhyxFBgrEFh0VrPJ$MllG8auiU26x2pmzL4.1maHzPHrA.4gTdCvlATFp8HJU9UPee4zCS9BVl2HOzKaUYD/zEm8r/OF05F2icWB0K/",
-            "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC61wMCjOSHwbVb4VfVyl5sn497qW4PsdQ7Ty7aD6wDNZ/QjjULkDV/yW5WjDlDQ7UqFH0Sr7vywjqDizUAqK7zM5FsUKsUXWHWwg/ehKg8j9xKcMv11AkFoUoujtfAujnKODkk58XSA9whPr7qcw3vPrmog680pnMSzf9LC7J6kXfs6lkoKfBh9VnlxusCrw2yg0qI1fHAZBLPx7mW6+me71QZsS6sVz8v8KXyrXsKTdnF50FjzHcK9HXDBtSJS5wA3fkcRYymJe0o6WMWNdgSRVpoSiWaHHmFgdMUJaYoCfhXzyl7LtNb3Q+Sveg+tJK7JaRXBLMUllOlJ6ll5Hod root@localhost",
-            "home": "/home/home2",
-            "shell": "/bin/sh",
-            "groups": [
-              "group1"
-            ],
-            "uid": 1020,
-            "gid": 1050
+            "name": "redhat",
+            "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC61wMCjOSHwbVb4VfVyl5sn497qW4PsdQ7Ty7aD6wDNZ/QjjULkDV/yW5WjDlDQ7UqFH0Sr7vywjqDizUAqK7zM5FsUKsUXWHWwg/ehKg8j9xKcMv11AkFoUoujtfAujnKODkk58XSA9whPr7qcw3vPrmog680pnMSzf9LC7J6kXfs6lkoKfBh9VnlxusCrw2yg0qI1fHAZBLPx7mW6+me71QZsS6sVz8v8KXyrXsKTdnF50FjzHcK9HXDBtSJS5wA3fkcRYymJe0o6WMWNdgSRVpoSiWaHHmFgdMUJaYoCfhXzyl7LtNb3Q+Sveg+tJK7JaRXBLMUllOlJ6ll5Hod root@localhost"
           }
-        ],
-        "group": [
-          {
-            "name": "group1",
-            "gid": 1030
-          },
-          {
-            "name": "group2",
-            "gid": 1050
-          }
-        ],
-        "timezone": {
-          "timezone": "Europe/London",
-          "ntpservers": [
-            "time.example.com"
-          ]
-        },
-        "locale": {
-          "languages": [
-            "en_US"
-          ],
-          "keyboard": "dvorak"
-        },
-        "services": {
-          "enabled": [
-            "sshd.socket"
-          ],
-          "disabled": [
-            "bluetooth.service"
-          ]
-        }
+        ]
       }
     }
   },
@@ -88,9 +36,6 @@
         "urls": {
           "sha256:00df9dc49c8408b918cc9ed675571ce588bd209ba8acced9684b87a2b33a810b": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/n/NetworkManager-libnm-1.26.2-2.fc33.x86_64.rpm"
-          },
-          "sha256:014f5918175e0748996a9baa326953978ef0c348812553f2197784677b983ada": {
-            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/f/fedora-release-cloud-33-0.15.noarch.rpm"
           },
           "sha256:017470d15976d4c8d52c838ab780b92bad578726d357f128e1d84476fdaca33e": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libkcapi-1.2.0-3.fc33.x86_64.rpm"
@@ -149,6 +94,9 @@
           "sha256:127da89c822f7495a46f86eb5442da9918e61000b98825132c5edee5add83296": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-libsemanage-3.1-2.fc33.x86_64.rpm"
           },
+          "sha256:145be56e4fbc3061ed8a5923eabe328f70943d2d4c4381ecc9871ae4c82c6a0a": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/spice-vdagent-0.20.0-3.fc33.x86_64.rpm"
+          },
           "sha256:145d1a388642957bd13dca09cb52876cf83956faaf2b8261604a083014157ac0": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-pyserial-3.4-9.fc33.noarch.rpm"
           },
@@ -191,14 +139,23 @@
           "sha256:188b4d17e07b388564fabe36cfa3d2aec824d746dbc42dbd48db212c6739a4d6": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libini_config-1.3.1-46.fc33.x86_64.rpm"
           },
+          "sha256:19b86e744eb1b02b2e3295cd5ca63a65baa46c45c97be06b092d52227a9a8007": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/i/iptables-nft-1.8.5-3.fc33.x86_64.rpm"
+          },
           "sha256:1a8566742930adcd69843eb3dedad388c9d702a46bc9f55b0623ceda71a4c5f1": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/k/krb5-libs-1.18.2-22.fc33.x86_64.rpm"
           },
           "sha256:1b1df1ad3bf94731abfc09601921d255f31f8a70b984d466a7d04963edd67462": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/h/hwdata-0.339-1.fc33.noarch.rpm"
           },
+          "sha256:1b313323c5adc6624a3678d406d1da566a83a66b925c15edc0ad6cd6530e314a": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-slip-dbus-0.6.4-21.fc33.noarch.rpm"
+          },
           "sha256:1bd5a03f942c896ffcf7a4f6fb77b1354287bcba178ed99971f768897a873f93": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libtevent-0.10.2-5.fc33.x86_64.rpm"
+          },
+          "sha256:1c4a60013eeec3406e5fdadba5e410eb4d67fa86dc63a017cda1765a4c6e99b9": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libXext-1.3.4-4.fc33.x86_64.rpm"
           },
           "sha256:1c98c03a74d070cbcf514cea9be17edb77dbe7db5257db1244a928909217639e": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-jinja2-2.11.2-6.fc33.noarch.rpm"
@@ -220,6 +177,9 @@
           },
           "sha256:2200dd65dff57b773532153d3626ecb5914bd7826c42c689ca34be3f60ac3fe2": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/a/alternatives-1.14-3.fc33.x86_64.rpm"
+          },
+          "sha256:23bbee54f63c0f6f9834bda782faa01bab57428b712529e8241ae6f791e219c2": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-firewall-0.8.3-2.fc33.noarch.rpm"
           },
           "sha256:24ccc95a45da818062f1afcd444344da250f635a2055f3386aaa51d96ed9a982": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python-pip-wheel-20.2.2-1.fc33.noarch.rpm"
@@ -263,9 +223,6 @@
           "sha256:2d9ed3be09813ff727751a6db3a839e49630257df9ab5a21204335f4ca49fecc": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/f/filesystem-3.14-3.fc33.x86_64.rpm"
           },
-          "sha256:2e8c72fe69b653572fe4ae88478272b641eabe7131a89585505f3f6a0cb1d8e2": {
-            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/r/rsync-3.2.3-1.fc33.x86_64.rpm"
-          },
           "sha256:2ec0c1988cea67a641198b9ab090232d4fee31b25f1be64288f492524892524f": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/cloud-init-19.4-7.fc33.noarch.rpm"
           },
@@ -277,9 +234,6 @@
           },
           "sha256:2fd212db921c774e859c22f3afb26463ed0024b295b18695242cbbe4db83233d": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/v/vim-minimal-8.2.1551-1.fc33.x86_64.rpm"
-          },
-          "sha256:304cb90329d2eabe3d44e774758d296e594c0a647a2009212529e8eb0cb94c21": {
-            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/syslinux-6.04-0.16.fc33.x86_64.rpm"
           },
           "sha256:31b24e5b45ac87710d84a334b57978b858d1ea723645d40a1b020d26f7ab87aa": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/n/npth-1.6-5.fc33.x86_64.rpm"
@@ -365,6 +319,9 @@
           "sha256:4071dc5aca20a9a935dd20934beddab084ca12658c3116bc9c7c2d71cea0cfb4": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/i/iproute-tc-5.8.0-1.fc33.x86_64.rpm"
           },
+          "sha256:40a3d2dd07b985acc1624d13d1440f6ab6d8c6be05620de6b8aaf4bcd4392ffb": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/k/kernel-5.8.11-300.fc33.x86_64.rpm"
+          },
           "sha256:41bb26740843bb610a6e4415a61f82e448a206a83016099f8bab48e63c090dca": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/g/gettext-0.21-3.fc33.x86_64.rpm"
           },
@@ -377,11 +334,17 @@
           "sha256:4507a3f68f13d9a7efebc8f812becf6e493106dab092e03fd56bcf6dca9b39c4": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libxkbcommon-1.0.1-1.fc33.x86_64.rpm"
           },
+          "sha256:451999cf28f01e01efb4bbe34ad9d5c4257e822eca40071e32dd96e376da9ffd": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/f/firewalld-0.8.3-2.fc33.noarch.rpm"
+          },
           "sha256:4523a4d3232a25f482c6078c17c98a599246d84ae1b800138903f9c089278971": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-jwt-1.7.1-10.fc33.noarch.rpm"
           },
           "sha256:45663b9ef5b290c0f824c944c77994c01cbd31828315a2c01c93740ecf020a22": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/o/openssl-libs-1.1.1g-15.fc33.x86_64.rpm"
+          },
+          "sha256:4647f865c1b8500cf3ad58d458279c6e8a3d702cea91566c8ca9cf8182694064": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/x/xen-libs-4.14.0-5.fc33.x86_64.rpm"
           },
           "sha256:47d89881d94a13356f7268a9fc1a3ef14a4fe536ba616dd1d2b90b76e3c4535b": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libsss_sudo-2.3.1-4.fc33.x86_64.rpm"
@@ -401,11 +364,17 @@
           "sha256:4a869873c1957868fecc35c9736127372050494476e8ad2a93ba2d4ae34fe418": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/i/iptables-libs-1.8.5-3.fc33.x86_64.rpm"
           },
+          "sha256:4ce381cf2c13167c194c1f652c7bc0677a3d3d769c76e80c1bf61b45fbe23371": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/i/ipset-7.6-2.fc33.x86_64.rpm"
+          },
           "sha256:4d8e78c03ca01f65cd174ac12822cf9e6af9042d8551bf404ed6ca2841421226": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/sssd-nfs-idmap-2.3.1-4.fc33.x86_64.rpm"
           },
           "sha256:4ddb4a5054bd81371a6f9c9ad9ebf1ec96460d989894e4e0d39848ab7ca3ec90": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-dnf-plugins-core-4.0.16-4.fc33.noarch.rpm"
+          },
+          "sha256:4ec08f7f99f6b3b82a5f443aef01ff67f2ff718a63a4784d93a57fc5079bb117": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/i/ipset-libs-7.6-2.fc33.x86_64.rpm"
           },
           "sha256:4f18ef09f1b3283425d35226e392355f1f2e7a5527e68e2fdec4d61f7351498e": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-oauthlib-3.0.2-8.fc33.noarch.rpm"
@@ -461,9 +430,6 @@
           "sha256:59c4b3c0c1d150e80d64c4b63e477956116ffcdfffbc0fd47759a0d45a06bed5": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libselinux-utils-3.1-2.fc33.x86_64.rpm"
           },
-          "sha256:5c7fb068c89994c47b9ea0c64a4854bb90777aacec7e709315142bed4c9c63e4": {
-            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/console-login-helper-messages-issuegen-0.19-2.fc33.noarch.rpm"
-          },
           "sha256:5ce1673ffd37a4ac40a7dfd4d859bca508a6da8a01b9f3c31ae03776e709c964": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/sqlite-libs-3.33.0-1.fc33.x86_64.rpm"
           },
@@ -488,8 +454,8 @@
           "sha256:62b1639bc39c37c97b08989d583e18c8dcf4601381e9bd9056bd8c4b5ba24f16": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-urllib3-1.25.8-4.fc33.noarch.rpm"
           },
-          "sha256:67ac6db0877f2fed815839fa0f7d60475261483cb13e2f0e9f1be814fe83e8e2": {
-            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/m/mtools-4.0.24-3.fc33.x86_64.rpm"
+          "sha256:67680e21b02f48469ed388272b761ad049fcef854c5915baca620974646fb0ba": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/plymouth-core-libs-0.9.4-16.20200325gite31c81f.fc33.x86_64.rpm"
           },
           "sha256:683bf5e15c5b70b7e0a61ff561031067c61649f5984ee6cbb230012e85e09528": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libnghttp2-1.41.0-3.fc33.x86_64.rpm"
@@ -509,8 +475,14 @@
           "sha256:6b1d965a722a5ef3f53ce486b72c7aba5f9d1afcbce952227d66adac8665c270": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/cyrus-sasl-lib-2.1.27-6.fc33.x86_64.rpm"
           },
+          "sha256:6bf58da366702e9e7cedf3a1560a623aec008621bfb7776665297bf073b29168": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/a/alsa-sof-firmware-1.5-2.fc33.noarch.rpm"
+          },
           "sha256:6c235bd211f68e4ed925bc6a03b8b0e5c30f1de41cb7cd1c0c79f9996024eede": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/g/grub2-pc-modules-2.04-31.fc33.noarch.rpm"
+          },
+          "sha256:6d2694c755cd88eaef1f1037050658786f64b83ab5b908211774052cefe3f953": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/n/nftables-0.9.3-6.fc33.x86_64.rpm"
           },
           "sha256:708f335842ca133b3c2405ac9cc802954b2d115782e92cce857ed145949378df": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libgcrypt-1.8.6-4.fc33.x86_64.rpm"
@@ -536,6 +508,9 @@
           "sha256:7733a3a932c7f68b8eef4a1c9341adfc7b9104a46ca45a5d21b20aab25a364f2": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-configobj-5.0.6-22.fc33.noarch.rpm"
           },
+          "sha256:77554fc172b008324f5169c4dd9acdfe2fc90750b862a0fd7a57568f126feb97": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/plymouth-0.9.4-16.20200325gite31c81f.fc33.x86_64.rpm"
+          },
           "sha256:78371d60d78988d2a7464138697eb77e23bf8311030977d43003da237c04b296": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-unbound-1.10.1-4.fc33.x86_64.rpm"
           },
@@ -551,6 +526,9 @@
           "sha256:78ced292e75ebe981ab4456b27351d9504bca56ecc46d25ee6c2ce40a9d3cbe0": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/p11-kit-trust-0.23.21-2.fc33.x86_64.rpm"
           },
+          "sha256:792234d5e2ff1e2bb3347ff8aa28a00b51e0ba27403abb0fbddf94e8dfd3a53f": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/f/firewalld-filesystem-0.8.3-2.fc33.noarch.rpm"
+          },
           "sha256:79303712b9dbd6716b80250386165aedf99494c9f0d18980e8a1a04857294ccd": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libxml2-2.9.10-7.fc33.x86_64.rpm"
           },
@@ -565,6 +543,9 @@
           },
           "sha256:7a5f53ca7b98386413e1bd4d6d3fa081f6201132b9b3a6cd8589767707ea9b56": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/m/mkpasswd-5.5.6-2.fc33.x86_64.rpm"
+          },
+          "sha256:7b6c64812a5981b5d4c523862c0162e2c6c5e1fb81188184e7c46c5152e29f3d": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libpciaccess-0.16-3.fc33.x86_64.rpm"
           },
           "sha256:7c1a3d7eca1254f8b39563a3dac133dfb14e6daa86ec2b1ad291958d9dfdbc38": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libssh-config-0.9.5-1.fc33.noarch.rpm"
@@ -587,26 +568,20 @@
           "sha256:80d364c9512d2021ab15fbcc685761b1363e233d6bb1a0384438f8bafccc76ac": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-setools-4.3.0-5.fc33.x86_64.rpm"
           },
-          "sha256:8153477831ff138eea962407ca71d3c44c09d9534cb44eec4ae6f5149eeb2b2e": {
-            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/cloud-utils-growpart-0.31-7.fc33.noarch.rpm"
-          },
           "sha256:82de6ab9664b5d79f62beb16afe00ad99d79e768c95aee8cca40c588196e9931": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-dbus-1.2.16-3.fc33.x86_64.rpm"
           },
-          "sha256:850b5d8bbb4d54502e86577195229e11bde6c3f6b7865587b5000af5b64cb55b": {
-            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/f/fedora-release-identity-cloud-33-0.15.noarch.rpm"
-          },
           "sha256:8548310e53e0940563f61cd9bfe5149ea866e2ea1afac8ebe68baf6954ab1415": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/ca-certificates-2020.2.41-4.fc33.noarch.rpm"
-          },
-          "sha256:85beae6f05018ccfbf0f5611bbdda7c883158cd06e14c687a562fe9a6edc38e5": {
-            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/console-login-helper-messages-0.19-2.fc33.noarch.rpm"
           },
           "sha256:86214596520882f8daabdac8af3e2e9c626c4913350ad4387bb6d1e7143148e8": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-attrs-19.3.0-5.fc33.noarch.rpm"
           },
           "sha256:86340e958d97242345d8c329572c0247df7c22ab896cb055820202d7b384b7aa": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libsss_idmap-2.3.1-4.fc33.x86_64.rpm"
+          },
+          "sha256:865464cf9ca5bfafa3dc130f87021b00005af36ceb481ac1fe2508f27ae42bb6": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/q/qemu-guest-agent-5.1.0-5.fc33.x86_64.rpm"
           },
           "sha256:86cae2eb166b153dd648bd51c7507934c198488c0a20109e94bbec1d9ee1fddb": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/t/tpm2-tss-3.0.1-1.fc33.x86_64.rpm"
@@ -616,6 +591,9 @@
           },
           "sha256:8772a0ee3f0e3c8fb2917b7286af74f07d49a5741ba2b7ab0fa4c90934b10902": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/k/kbd-2.3.0-2.fc33.x86_64.rpm"
+          },
+          "sha256:879488c2eda967d8bff8f898909060b6a1611202a5a2ca3e668668e434840ae6": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-decorator-4.4.2-3.fc33.noarch.rpm"
           },
           "sha256:8832980d5eacb5e40d45e3ffe9c6268532c3467ba2ac60961410bdc9b47ec452": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/o/os-prober-1.77-5.fc33.x86_64.rpm"
@@ -656,6 +634,12 @@
           "sha256:92c1615d385b32088f78a6574a2bf89a6bb29d9858abdd71471ef5113ef0831f": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/a/acl-2.2.53-9.fc33.x86_64.rpm"
           },
+          "sha256:936368a9632e9a23a8b21c4cde6d58eb1abe3c7ac58ff165592e6e9791d50d4f": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libX11-common-1.6.12-1.fc33.noarch.rpm"
+          },
+          "sha256:93c8a8e5c03d71657c96e48ca2f295f4e1af9f7f3e17b7a7888bfe2a8ca263fb": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/plymouth-scripts-0.9.4-16.20200325gite31c81f.fc33.x86_64.rpm"
+          },
           "sha256:9539c6e7a76422600939d661382634d7912e0669aa7e273fdf14b1fcde5b0652": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/d/device-mapper-libs-1.02.173-1.fc33.x86_64.rpm"
           },
@@ -680,6 +664,9 @@
           "sha256:97b3af8dcfbf6c1b9986f0dfc48a76eab8b7131702b637bdcd2d22120dd8c8ac": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-requests-2.24.0-3.fc33.noarch.rpm"
           },
+          "sha256:984f215f7f0fe4961026939892ab651416899244ed2230b3aa4c82e18d7dfbed": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libnftnl-1.1.7-3.fc33.x86_64.rpm"
+          },
           "sha256:995487eaff3aa00d2e803bcd18c899a2ed3e368f08e4e95cd5a0f6b71814acb9": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/d/dhcp-client-4.4.2-8.b1.fc33.x86_64.rpm"
           },
@@ -688,6 +675,9 @@
           },
           "sha256:99f27025aedb0cd4a652f4a42bb176122253d6522e7e5ff5d162dd3a787ca135": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libattr-2.4.48-10.fc33.x86_64.rpm"
+          },
+          "sha256:9a986defaa095ea38313840427993f5afe47ef63ed6dbf0122b9163967fa2e25": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libXrandr-1.5.2-4.fc33.x86_64.rpm"
           },
           "sha256:9b251076743ece03c72f266ecf2b8b82372410164568c1eb1ee0e6aaf1460340": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libtdb-1.4.3-5.fc33.x86_64.rpm"
@@ -704,8 +694,17 @@
           "sha256:9c8d18c24626a6a022d0087a61f23d0056f3504cd43b56ca61777f3aac95d7dd": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libpcap-1.9.1-5.fc33.x86_64.rpm"
           },
+          "sha256:9df24baef091f324f92cb117429007e54488a0f4456c65402f4fec1fce1ddf9e": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libxcb-1.13.1-5.fc33.x86_64.rpm"
+          },
           "sha256:9e086b1a12c803660e68c61aec511d6009907137fbc180d46dc5eee6dee115ad": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/g/groff-base-1.22.4-2.fc33.x86_64.rpm"
+          },
+          "sha256:9fa67fa95bf4e384c2088023606ab08cf325e5ba3262aa53c454d8779824cc78": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libXrender-0.9.10-12.fc33.x86_64.rpm"
+          },
+          "sha256:a015ff446272481d4bc99dfb6f0da629b5a44a8bf0d0d08b3bca5bebfe6252dd": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/g/gobject-introspection-1.66.0-1.fc33.x86_64.rpm"
           },
           "sha256:a024ca6e765c0906cbf5d36a11d2d13c0c497171459ef4c1061e8307976646a3": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-pytz-2020.1-3.fc33.noarch.rpm"
@@ -728,11 +727,11 @@
           "sha256:a4b3e2d0a10721c22d86fe8517b057fb600addd2a6b9f77f64d5c8b57def627f": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libxcrypt-4.4.17-1.fc33.x86_64.rpm"
           },
-          "sha256:a4c50b0175c112e5cbfc180e3468eca871ba1289f9e287f9e397b163ddd764a6": {
-            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/syslinux-extlinux-6.04-0.16.fc33.x86_64.rpm"
-          },
           "sha256:a5ed095938b6ef997cbad403a5f46f64b71db54c8e35c7d0b93d0ca6e5fa88a7": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libunistring-0.9.10-9.fc33.x86_64.rpm"
+          },
+          "sha256:a64eacf9e4c4636d097ccbe0a31f31eb0213c2658d83448fd77ecc636475968b": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/k/kernel-modules-5.8.11-300.fc33.x86_64.rpm"
           },
           "sha256:a7c17594d09d7940c8a9b18c6c5c359a430f7783b809e45d484a637d2b555896": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/g/grub2-tools-minimal-2.04-31.fc33.x86_64.rpm"
@@ -740,17 +739,11 @@
           "sha256:a7f614c850d55138f4600159b68cc25fb0d2c4fddebe8969a0ddec76ca6483bc": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/shared-mime-info-2.0-3.fc33.x86_64.rpm"
           },
-          "sha256:a89afa93b4570d941838daa89cfaa671fa11559626c9ed976b15a63a9b3c5e4e": {
-            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/syslinux-nonlinux-6.04-0.16.fc33.noarch.rpm"
-          },
           "sha256:a8a474e3c9125752d9636e3b8da5e788507500fe2f9c031eaf80a0051a46cc7c": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/g/gnutls-3.6.15-1.fc33.x86_64.rpm"
           },
           "sha256:a8a86e1934e5367c8824912892e10db99544c688d6f6f6d6e95f91a7b7408b29": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libibverbs-31.0-1.fc33.x86_64.rpm"
-          },
-          "sha256:a983b383ec849791775c8827cc1037b6ba8225f3a1c0c945d848901ffc2a572d": {
-            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/console-login-helper-messages-profile-0.19-2.fc33.noarch.rpm"
           },
           "sha256:aa02e6efd3cfcf909a52fef4615ef47517264ae0f0802ab3787753a05d923698": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libfido2-1.4.0-3.fc33.x86_64.rpm"
@@ -772,9 +765,6 @@
           },
           "sha256:af0dd452a12ec686600901bd5ba6303594ef2cd9b0948f80ec8cc09d986a4860": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libsmartcols-2.36-3.fc33.x86_64.rpm"
-          },
-          "sha256:af2777ec0c6ee867b5ecad024de55fce1afccb5567cd48501611e073536d332f": {
-            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/syslinux-extlinux-nonlinux-6.04-0.16.fc33.noarch.rpm"
           },
           "sha256:af6c6f788555064ff9c7d3b32b2d4edde5e33e958384a909459ce33940755971": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/f/fuse-libs-2.9.9-10.fc33.x86_64.rpm"
@@ -830,6 +820,12 @@
           "sha256:bacd3302dfb3b9a690bcdc03a41f71d24b5665f8d7fa5398d89953f894955c46": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-dnf-4.2.23-2.fc33.noarch.rpm"
           },
+          "sha256:bb78a15cb79544eccdd607593f7b0440dfb84b3d698ca3c2cee4e61177d2e983": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-slip-0.6.4-21.fc33.noarch.rpm"
+          },
+          "sha256:bbfd6ad6b0aa4adeae2770ecfee7521ee487de40294bfda2e5ffedf21fbffae2": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/y/yajl-2.1.0-15.fc33.x86_64.rpm"
+          },
           "sha256:bc05921e6a65cf0fc7834291402f6f782c6470d37ee7f884054b0f216985b3e6": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/g/grep-3.4-5.fc33.x86_64.rpm"
           },
@@ -857,6 +853,9 @@
           "sha256:c0316087a724a0de9805f0b074594f4fc0bf53848c71ac1cf3a28f0d774da431": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/r/rpm-libs-4.16.0-0.rc1.1.fc33.x86_64.rpm"
           },
+          "sha256:c0bb5ee144010e8aee39f658a5a47ec8690af69172399ec05726360945f1674f": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libXau-1.0.9-4.fc33.x86_64.rpm"
+          },
           "sha256:c12358670b0183565e4384ddf68d4b2ccf5c361dde5601a416dd55eaf113137d": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/d/dnf-data-4.2.23-2.fc33.noarch.rpm"
           },
@@ -880,9 +879,6 @@
           },
           "sha256:c33cf40de2cdb38c36f830b0fcbca1ee89984c706682677d45f5bfe436bf4010": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libcap-ng-0.8-1.fc33.x86_64.rpm"
-          },
-          "sha256:c3a7f6f9acc694966b7285b49ac175c4c7617e2e2f5db9b7e33bc2cb00387a2f": {
-            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/console-login-helper-messages-motdgen-0.19-2.fc33.noarch.rpm"
           },
           "sha256:c59a621f3cdd5e073b3c1ef9cd8fd9d7e02d77d94be05330390eac05f77b5b60": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/b/bash-5.0.17-2.fc33.x86_64.rpm"
@@ -911,6 +907,9 @@
           "sha256:cc87778dd52ee4ae352a1b995f4fccc4f5e2e681221f0cde738a02fea17370b1": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/popt-1.18-2.fc33.x86_64.rpm"
           },
+          "sha256:cc9a861c8dc3f42d26f8512c1ef48c971161f3182e31b1561337fc83492b39e9": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/a/alsa-lib-1.2.3.2-5.fc33.x86_64.rpm"
+          },
           "sha256:cccf6a7f2430d8baddb0d0aad1c9b49f0829ee127cdeda1254cfcef978be1b49": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libsss_certmap-2.3.1-4.fc33.x86_64.rpm"
           },
@@ -922,6 +921,9 @@
           },
           "sha256:cdad5f33eb5005d565e3301eea9dbdfd74b6b231c5c914a1711b35c7c266bc86": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-six-1.15.0-2.fc33.noarch.rpm"
+          },
+          "sha256:ce611e9fed2d272070e3f42c963a1108af52cfe2d0c3d6b0d9e550f98b5e3d7b": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/x/xen-licenses-4.14.0-5.fc33.x86_64.rpm"
           },
           "sha256:cf88c9dca803c81dc00e68e3f6fa85f9855fc2585cd41050ec0b2d91e00e43b4": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/g/gdbm-libs-1.18.1-5.fc33.x86_64.rpm"
@@ -992,6 +994,9 @@
           "sha256:ddb1bd7c1d46901e437a3c274b70943a3e031896d162e9c89c0f0efcdbb58b47": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-pip-20.2.2-1.fc33.noarch.rpm"
           },
+          "sha256:def04d661f9487f4ec107c8c23602ee6ad8b6bdfed136d6773670673f9400d10": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libXfixes-5.0.3-12.fc33.x86_64.rpm"
+          },
           "sha256:df356b56ac2a4a6cf0aeb74f17f14a3295a077b2d4a119fe0a93d98e5e619d69": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python-unversioned-command-3.9.0~rc2-1.fc33.noarch.rpm"
           },
@@ -1034,6 +1039,9 @@
           "sha256:e8d1d056e305bae57142b8c529913b05467a5d5938fd46e5844e6a37cc7aa452": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/n/net-tools-2.0-0.58.20160912git.fc33.x86_64.rpm"
           },
+          "sha256:ea4f7d09beb825faa465ec60608b38ffd2bf04ed8ee3935b6359b685cfe0951a": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-gobject-base-3.38.0-1.fc33.x86_64.rpm"
+          },
           "sha256:ea95a099f35c2ff2a64f02ff7d2b927b42b6c03f00f437fdbeb7d7f70899dabe": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/m/mpfr-4.1.0-2.fc33.x86_64.rpm"
           },
@@ -1070,6 +1078,12 @@
           "sha256:f20e6a7d425bac2891a7f6628bcfcc8553efc2e3a841b0395cd3729c16138aa1": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/n/ncurses-6.2-3.20200222.fc33.x86_64.rpm"
           },
+          "sha256:f2c29984e54bcdbcdf1eae6bfdade96af65cadca5ebcdb7b2a967f7a62dff8c1": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-nftables-0.9.3-6.fc33.x86_64.rpm"
+          },
+          "sha256:f2e69fcdb81411630a2d8c562741cba5b07f129c7ba82254b04b48417e260df8": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libXinerama-1.1.4-6.fc33.x86_64.rpm"
+          },
           "sha256:f40e197dfe02e69fbe05587bb6f8c89708fd43e6c6e6e1105beaee511d7f6984": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libstdc++-10.2.1-3.fc33.x86_64.rpm"
           },
@@ -1093,6 +1107,12 @@
           },
           "sha256:f6d6f94fd12f5aac1c053854e6f8a0505bcdc58ae3f383e949d03522ba1c7d05": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/lmdb-libs-0.9.26-1.fc33.x86_64.rpm"
+          },
+          "sha256:f710fd960d25f3b1055220e96fd9fba179dc1187f5b2f506dfda84dbefd74932": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libX11-1.6.12-1.fc33.x86_64.rpm"
+          },
+          "sha256:f87a6d4a2dc0be7abd56ba48b1913856b08205de95f033a0ab6c34fb0f893752": {
+            "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libdrm-2.4.102-2.fc33.x86_64.rpm"
           },
           "sha256:f87a7db3ba17f6cd201de31b73768c93b4679bee33a97507723dc0eaed373f50": {
             "url": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libargon2-20171227-5.fc33.x86_64.rpm"
@@ -2103,6 +2123,14 @@
                 "check_gpg": true
               },
               {
+                "checksum": "sha256:cc9a861c8dc3f42d26f8512c1ef48c971161f3182e31b1561337fc83492b39e9",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:6bf58da366702e9e7cedf3a1560a623aec008621bfb7776665297bf073b29168",
+                "check_gpg": true
+              },
+              {
                 "checksum": "sha256:2200dd65dff57b773532153d3626ecb5914bd7826c42c689ca34be3f60ac3fe2",
                 "check_gpg": true
               },
@@ -2144,26 +2172,6 @@
               },
               {
                 "checksum": "sha256:2ec0c1988cea67a641198b9ab090232d4fee31b25f1be64288f492524892524f",
-                "check_gpg": true
-              },
-              {
-                "checksum": "sha256:8153477831ff138eea962407ca71d3c44c09d9534cb44eec4ae6f5149eeb2b2e",
-                "check_gpg": true
-              },
-              {
-                "checksum": "sha256:85beae6f05018ccfbf0f5611bbdda7c883158cd06e14c687a562fe9a6edc38e5",
-                "check_gpg": true
-              },
-              {
-                "checksum": "sha256:5c7fb068c89994c47b9ea0c64a4854bb90777aacec7e709315142bed4c9c63e4",
-                "check_gpg": true
-              },
-              {
-                "checksum": "sha256:c3a7f6f9acc694966b7285b49ac175c4c7617e2e2f5db9b7e33bc2cb00387a2f",
-                "check_gpg": true
-              },
-              {
-                "checksum": "sha256:a983b383ec849791775c8827cc1037b6ba8225f3a1c0c945d848901ffc2a572d",
                 "check_gpg": true
               },
               {
@@ -2303,7 +2311,7 @@
                 "check_gpg": true
               },
               {
-                "checksum": "sha256:014f5918175e0748996a9baa326953978ef0c348812553f2197784677b983ada",
+                "checksum": "sha256:55de0f42f8c0b62987433de40109f4f3b9190976e5439deafbeb8b3a93509d68",
                 "check_gpg": true
               },
               {
@@ -2311,7 +2319,7 @@
                 "check_gpg": true
               },
               {
-                "checksum": "sha256:850b5d8bbb4d54502e86577195229e11bde6c3f6b7865587b5000af5b64cb55b",
+                "checksum": "sha256:377e1ac03d5676a9c8449c655999ba48793d26254ec973667f00620015b29de6",
                 "check_gpg": true
               },
               {
@@ -2336,6 +2344,14 @@
               },
               {
                 "checksum": "sha256:0fc62ef8c645c239295982a2e6436bd3604c367d82b48e145b65d20c1f9e8b35",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:451999cf28f01e01efb4bbe34ad9d5c4257e822eca40071e32dd96e376da9ffd",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:792234d5e2ff1e2bb3347ff8aa28a00b51e0ba27403abb0fbddf94e8dfd3a53f",
                 "check_gpg": true
               },
               {
@@ -2396,6 +2412,10 @@
               },
               {
                 "checksum": "sha256:a8a474e3c9125752d9636e3b8da5e788507500fe2f9c031eaf80a0051a46cc7c",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:a015ff446272481d4bc99dfb6f0da629b5a44a8bf0d0d08b3bca5bebfe6252dd",
                 "check_gpg": true
               },
               {
@@ -2467,7 +2487,19 @@
                 "check_gpg": true
               },
               {
+                "checksum": "sha256:4ce381cf2c13167c194c1f652c7bc0677a3d3d769c76e80c1bf61b45fbe23371",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:4ec08f7f99f6b3b82a5f443aef01ff67f2ff718a63a4784d93a57fc5079bb117",
+                "check_gpg": true
+              },
+              {
                 "checksum": "sha256:4a869873c1957868fecc35c9736127372050494476e8ad2a93ba2d4ae34fe418",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:19b86e744eb1b02b2e3295cd5ca63a65baa46c45c97be06b092d52227a9a8007",
                 "check_gpg": true
               },
               {
@@ -2495,7 +2527,15 @@
                 "check_gpg": true
               },
               {
+                "checksum": "sha256:40a3d2dd07b985acc1624d13d1440f6ab6d8c6be05620de6b8aaf4bcd4392ffb",
+                "check_gpg": true
+              },
+              {
                 "checksum": "sha256:dd8689a7ec253dd24248e8e06fb74958fa09cfbc8e215824cac6d8186b943e72",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:a64eacf9e4c4636d097ccbe0a31f31eb0213c2658d83448fd77ecc636475968b",
                 "check_gpg": true
               },
               {
@@ -2532,6 +2572,38 @@
               },
               {
                 "checksum": "sha256:d835bbf3799b4514447cdffff2367e2352828e61902346fe8575e1bba132a540",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:f710fd960d25f3b1055220e96fd9fba179dc1187f5b2f506dfda84dbefd74932",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:936368a9632e9a23a8b21c4cde6d58eb1abe3c7ac58ff165592e6e9791d50d4f",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:c0bb5ee144010e8aee39f658a5a47ec8690af69172399ec05726360945f1674f",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:1c4a60013eeec3406e5fdadba5e410eb4d67fa86dc63a017cda1765a4c6e99b9",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:def04d661f9487f4ec107c8c23602ee6ad8b6bdfed136d6773670673f9400d10",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:f2e69fcdb81411630a2d8c562741cba5b07f129c7ba82254b04b48417e260df8",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:9a986defaa095ea38313840427993f5afe47ef63ed6dbf0122b9163967fa2e25",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:9fa67fa95bf4e384c2088023606ab08cf325e5ba3262aa53c454d8779824cc78",
                 "check_gpg": true
               },
               {
@@ -2604,6 +2676,10 @@
               },
               {
                 "checksum": "sha256:ecebd6e9ddcd886842ca7444c6db36904a4981acab884b6d54afc00ddcd2e5c5",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:f87a6d4a2dc0be7abd56ba48b1913856b08205de95f033a0ab6c34fb0f893752",
                 "check_gpg": true
               },
               {
@@ -2711,6 +2787,10 @@
                 "check_gpg": true
               },
               {
+                "checksum": "sha256:984f215f7f0fe4961026939892ab651416899244ed2230b3aa4c82e18d7dfbed",
+                "check_gpg": true
+              },
+              {
                 "checksum": "sha256:683bf5e15c5b70b7e0a61ff561031067c61649f5984ee6cbb230012e85e09528",
                 "check_gpg": true
               },
@@ -2728,6 +2808,10 @@
               },
               {
                 "checksum": "sha256:9c8d18c24626a6a022d0087a61f23d0056f3504cd43b56ca61777f3aac95d7dd",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:7b6c64812a5981b5d4c523862c0162e2c6c5e1fb81188184e7c46c5152e29f3d",
                 "check_gpg": true
               },
               {
@@ -2875,6 +2959,10 @@
                 "check_gpg": true
               },
               {
+                "checksum": "sha256:9df24baef091f324f92cb117429007e54488a0f4456c65402f4fec1fce1ddf9e",
+                "check_gpg": true
+              },
+              {
                 "checksum": "sha256:a4b3e2d0a10721c22d86fe8517b057fb600addd2a6b9f77f64d5c8b57def627f",
                 "check_gpg": true
               },
@@ -2939,10 +3027,6 @@
                 "check_gpg": true
               },
               {
-                "checksum": "sha256:67ac6db0877f2fed815839fa0f7d60475261483cb13e2f0e9f1be814fe83e8e2",
-                "check_gpg": true
-              },
-              {
                 "checksum": "sha256:f20e6a7d425bac2891a7f6628bcfcc8553efc2e3a841b0395cd3729c16138aa1",
                 "check_gpg": true
               },
@@ -2960,6 +3044,10 @@
               },
               {
                 "checksum": "sha256:5d8870dad6187c05f1a4599bf9fe16f8e3d3254c87a93a7f21bcf50579e10a07",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:6d2694c755cd88eaef1f1037050658786f64b83ab5b908211774052cefe3f953",
                 "check_gpg": true
               },
               {
@@ -3043,6 +3131,18 @@
                 "check_gpg": true
               },
               {
+                "checksum": "sha256:77554fc172b008324f5169c4dd9acdfe2fc90750b862a0fd7a57568f126feb97",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:67680e21b02f48469ed388272b761ad049fcef854c5915baca620974646fb0ba",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:93c8a8e5c03d71657c96e48ca2f295f4e1af9f7f3e17b7a7888bfe2a8ca263fb",
+                "check_gpg": true
+              },
+              {
                 "checksum": "sha256:17b93c1a952ad5bb1adeaeda811bbb014d7e5cc5b355a8d52c66737ece2a1f3e",
                 "check_gpg": true
               },
@@ -3115,6 +3215,10 @@
                 "check_gpg": true
               },
               {
+                "checksum": "sha256:879488c2eda967d8bff8f898909060b6a1611202a5a2ca3e668668e434840ae6",
+                "check_gpg": true
+              },
+              {
                 "checksum": "sha256:bc8c25957141f6eac2f7a965964f2a06b0ef658e12ca1786de5194f2835345f6",
                 "check_gpg": true
               },
@@ -3124,6 +3228,14 @@
               },
               {
                 "checksum": "sha256:4ddb4a5054bd81371a6f9c9ad9ebf1ec96460d989894e4e0d39848ab7ca3ec90",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:23bbee54f63c0f6f9834bda782faa01bab57428b712529e8241ae6f791e219c2",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:ea4f7d09beb825faa465ec60608b38ffd2bf04ed8ee3935b6359b685cfe0951a",
                 "check_gpg": true
               },
               {
@@ -3184,6 +3296,10 @@
               },
               {
                 "checksum": "sha256:ee05023a457c6b1390f774fe2ad08ca19d2a62986b086a0b4974e4f72785d8b9",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:f2c29984e54bcdbcdf1eae6bfdade96af65cadca5ebcdb7b2a967f7a62dff8c1",
                 "check_gpg": true
               },
               {
@@ -3255,11 +3371,23 @@
                 "check_gpg": true
               },
               {
+                "checksum": "sha256:bb78a15cb79544eccdd607593f7b0440dfb84b3d698ca3c2cee4e61177d2e983",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:1b313323c5adc6624a3678d406d1da566a83a66b925c15edc0ad6cd6530e314a",
+                "check_gpg": true
+              },
+              {
                 "checksum": "sha256:78371d60d78988d2a7464138697eb77e23bf8311030977d43003da237c04b296",
                 "check_gpg": true
               },
               {
                 "checksum": "sha256:62b1639bc39c37c97b08989d583e18c8dcf4601381e9bd9056bd8c4b5ba24f16",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:865464cf9ca5bfafa3dc130f87021b00005af36ceb481ac1fe2508f27ae42bb6",
                 "check_gpg": true
               },
               {
@@ -3303,10 +3431,6 @@
                 "check_gpg": true
               },
               {
-                "checksum": "sha256:2e8c72fe69b653572fe4ae88478272b641eabe7131a89585505f3f6a0cb1d8e2",
-                "check_gpg": true
-              },
-              {
                 "checksum": "sha256:be84b00378dbeb0b8e276ec62aa94b73f53a9ec02349deb91b2e3b59558a8fd1",
                 "check_gpg": true
               },
@@ -3328,6 +3452,10 @@
               },
               {
                 "checksum": "sha256:a7f614c850d55138f4600159b68cc25fb0d2c4fddebe8969a0ddec76ca6483bc",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:145be56e4fbc3061ed8a5923eabe328f70943d2d4c4381ecc9871ae4c82c6a0a",
                 "check_gpg": true
               },
               {
@@ -3355,22 +3483,6 @@
                 "check_gpg": true
               },
               {
-                "checksum": "sha256:304cb90329d2eabe3d44e774758d296e594c0a647a2009212529e8eb0cb94c21",
-                "check_gpg": true
-              },
-              {
-                "checksum": "sha256:a4c50b0175c112e5cbfc180e3468eca871ba1289f9e287f9e397b163ddd764a6",
-                "check_gpg": true
-              },
-              {
-                "checksum": "sha256:af2777ec0c6ee867b5ecad024de55fce1afccb5567cd48501611e073536d332f",
-                "check_gpg": true
-              },
-              {
-                "checksum": "sha256:a89afa93b4570d941838daa89cfaa671fa11559626c9ed976b15a63a9b3c5e4e",
-                "check_gpg": true
-              },
-              {
                 "checksum": "sha256:3dd03c5156d8163684b12d540d4a50fd68547379628745384e6462fa764acbab",
                 "check_gpg": true
               },
@@ -3388,10 +3500,6 @@
               },
               {
                 "checksum": "sha256:d9050393cb28556db6e8e74a33c7cc49bee8bc245a93f72afeba50bd00312a5d",
-                "check_gpg": true
-              },
-              {
-                "checksum": "sha256:871dc18514b9b64bcff6c4c61fd4c1a9f4c1e46cddd6f6934b4ee93662541aca",
                 "check_gpg": true
               },
               {
@@ -3431,6 +3539,14 @@
                 "check_gpg": true
               },
               {
+                "checksum": "sha256:4647f865c1b8500cf3ad58d458279c6e8a3d702cea91566c8ca9cf8182694064",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:ce611e9fed2d272070e3f42c963a1108af52cfe2d0c3d6b0d9e550f98b5e3d7b",
+                "check_gpg": true
+              },
+              {
                 "checksum": "sha256:58c02c55ec55daf4cda31abf02ac271fb0199c27f663e61a4392653cf2587866",
                 "check_gpg": true
               },
@@ -3444,6 +3560,10 @@
               },
               {
                 "checksum": "sha256:3b92b0f35b775195d893ac59c32831b902d2c20c8db8e68300e03bcb6d7cd73f",
+                "check_gpg": true
+              },
+              {
+                "checksum": "sha256:bbfd6ad6b0aa4adeae2770ecfee7521ee487de40294bfda2e5ffedf21fbffae2",
                 "check_gpg": true
               },
               {
@@ -3468,12 +3588,6 @@
           }
         },
         {
-          "name": "org.osbuild.keymap",
-          "options": {
-            "keymap": "dvorak"
-          }
-        },
-        {
           "name": "org.osbuild.hostname",
           "options": {
             "hostname": "localhost.localdomain"
@@ -3482,49 +3596,14 @@
         {
           "name": "org.osbuild.timezone",
           "options": {
-            "zone": "Europe/London"
-          }
-        },
-        {
-          "name": "org.osbuild.chrony",
-          "options": {
-            "timeservers": [
-              "time.example.com"
-            ]
-          }
-        },
-        {
-          "name": "org.osbuild.groups",
-          "options": {
-            "groups": {
-              "group1": {
-                "name": "group1",
-                "gid": 1030
-              },
-              "group2": {
-                "name": "group2",
-                "gid": 1050
-              }
-            }
+            "zone": "UTC"
           }
         },
         {
           "name": "org.osbuild.users",
           "options": {
             "users": {
-              "user1": {
-                "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC61wMCjOSHwbVb4VfVyl5sn497qW4PsdQ7Ty7aD6wDNZ/QjjULkDV/yW5WjDlDQ7UqFH0Sr7vywjqDizUAqK7zM5FsUKsUXWHWwg/ehKg8j9xKcMv11AkFoUoujtfAujnKODkk58XSA9whPr7qcw3vPrmog680pnMSzf9LC7J6kXfs6lkoKfBh9VnlxusCrw2yg0qI1fHAZBLPx7mW6+me71QZsS6sVz8v8KXyrXsKTdnF50FjzHcK9HXDBtSJS5wA3fkcRYymJe0o6WMWNdgSRVpoSiWaHHmFgdMUJaYoCfhXzyl7LtNb3Q+Sveg+tJK7JaRXBLMUllOlJ6ll5Hod root@localhost"
-              },
-              "user2": {
-                "uid": 1020,
-                "gid": 1050,
-                "groups": [
-                  "group1"
-                ],
-                "description": "description 2",
-                "home": "/home/home2",
-                "shell": "/bin/sh",
-                "password": "$6$BhyxFBgrEFh0VrPJ$MllG8auiU26x2pmzL4.1maHzPHrA.4gTdCvlATFp8HJU9UPee4zCS9BVl2HOzKaUYD/zEm8r/OF05F2icWB0K/",
+              "redhat": {
                 "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC61wMCjOSHwbVb4VfVyl5sn497qW4PsdQ7Ty7aD6wDNZ/QjjULkDV/yW5WjDlDQ7UqFH0Sr7vywjqDizUAqK7zM5FsUKsUXWHWwg/ehKg8j9xKcMv11AkFoUoujtfAujnKODkk58XSA9whPr7qcw3vPrmog680pnMSzf9LC7J6kXfs6lkoKfBh9VnlxusCrw2yg0qI1fHAZBLPx7mW6+me71QZsS6sVz8v8KXyrXsKTdnF50FjzHcK9HXDBtSJS5wA3fkcRYymJe0o6WMWNdgSRVpoSiWaHHmFgdMUJaYoCfhXzyl7LtNb3Q+Sveg+tJK7JaRXBLMUllOlJ6ll5Hod root@localhost"
               }
             }
@@ -3549,7 +3628,6 @@
           "name": "org.osbuild.grub2",
           "options": {
             "root_fs_uuid": "76a22bf4-f153-4541-b6c7-0332c0dfaeac",
-            "kernel_opts": " debug",
             "legacy": "i386-pc"
           }
         },
@@ -3564,11 +3642,7 @@
               "cloud-init.service",
               "cloud-config.service",
               "cloud-final.service",
-              "cloud-init-local.service",
-              "sshd.socket"
-            ],
-            "disabled_services": [
-              "bluetooth.service"
+              "cloud-init-local.service"
             ]
           }
         },
@@ -5917,6 +5991,26 @@
         "check_gpg": true
       },
       {
+        "name": "alsa-lib",
+        "epoch": 0,
+        "version": "1.2.3.2",
+        "release": "5.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/a/alsa-lib-1.2.3.2-5.fc33.x86_64.rpm",
+        "checksum": "sha256:cc9a861c8dc3f42d26f8512c1ef48c971161f3182e31b1561337fc83492b39e9",
+        "check_gpg": true
+      },
+      {
+        "name": "alsa-sof-firmware",
+        "epoch": 0,
+        "version": "1.5",
+        "release": "2.fc33",
+        "arch": "noarch",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/a/alsa-sof-firmware-1.5-2.fc33.noarch.rpm",
+        "checksum": "sha256:6bf58da366702e9e7cedf3a1560a623aec008621bfb7776665297bf073b29168",
+        "check_gpg": true
+      },
+      {
         "name": "alternatives",
         "epoch": 0,
         "version": "1.14",
@@ -6024,56 +6118,6 @@
         "arch": "noarch",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/cloud-init-19.4-7.fc33.noarch.rpm",
         "checksum": "sha256:2ec0c1988cea67a641198b9ab090232d4fee31b25f1be64288f492524892524f",
-        "check_gpg": true
-      },
-      {
-        "name": "cloud-utils-growpart",
-        "epoch": 0,
-        "version": "0.31",
-        "release": "7.fc33",
-        "arch": "noarch",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/cloud-utils-growpart-0.31-7.fc33.noarch.rpm",
-        "checksum": "sha256:8153477831ff138eea962407ca71d3c44c09d9534cb44eec4ae6f5149eeb2b2e",
-        "check_gpg": true
-      },
-      {
-        "name": "console-login-helper-messages",
-        "epoch": 0,
-        "version": "0.19",
-        "release": "2.fc33",
-        "arch": "noarch",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/console-login-helper-messages-0.19-2.fc33.noarch.rpm",
-        "checksum": "sha256:85beae6f05018ccfbf0f5611bbdda7c883158cd06e14c687a562fe9a6edc38e5",
-        "check_gpg": true
-      },
-      {
-        "name": "console-login-helper-messages-issuegen",
-        "epoch": 0,
-        "version": "0.19",
-        "release": "2.fc33",
-        "arch": "noarch",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/console-login-helper-messages-issuegen-0.19-2.fc33.noarch.rpm",
-        "checksum": "sha256:5c7fb068c89994c47b9ea0c64a4854bb90777aacec7e709315142bed4c9c63e4",
-        "check_gpg": true
-      },
-      {
-        "name": "console-login-helper-messages-motdgen",
-        "epoch": 0,
-        "version": "0.19",
-        "release": "2.fc33",
-        "arch": "noarch",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/console-login-helper-messages-motdgen-0.19-2.fc33.noarch.rpm",
-        "checksum": "sha256:c3a7f6f9acc694966b7285b49ac175c4c7617e2e2f5db9b7e33bc2cb00387a2f",
-        "check_gpg": true
-      },
-      {
-        "name": "console-login-helper-messages-profile",
-        "epoch": 0,
-        "version": "0.19",
-        "release": "2.fc33",
-        "arch": "noarch",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/c/console-login-helper-messages-profile-0.19-2.fc33.noarch.rpm",
-        "checksum": "sha256:a983b383ec849791775c8827cc1037b6ba8225f3a1c0c945d848901ffc2a572d",
         "check_gpg": true
       },
       {
@@ -6417,13 +6461,13 @@
         "check_gpg": true
       },
       {
-        "name": "fedora-release-cloud",
+        "name": "fedora-release",
         "epoch": 0,
         "version": "33",
         "release": "0.15",
         "arch": "noarch",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/f/fedora-release-cloud-33-0.15.noarch.rpm",
-        "checksum": "sha256:014f5918175e0748996a9baa326953978ef0c348812553f2197784677b983ada",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/f/fedora-release-33-0.15.noarch.rpm",
+        "checksum": "sha256:55de0f42f8c0b62987433de40109f4f3b9190976e5439deafbeb8b3a93509d68",
         "check_gpg": true
       },
       {
@@ -6437,13 +6481,13 @@
         "check_gpg": true
       },
       {
-        "name": "fedora-release-identity-cloud",
+        "name": "fedora-release-identity-basic",
         "epoch": 0,
         "version": "33",
         "release": "0.15",
         "arch": "noarch",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/f/fedora-release-identity-cloud-33-0.15.noarch.rpm",
-        "checksum": "sha256:850b5d8bbb4d54502e86577195229e11bde6c3f6b7865587b5000af5b64cb55b",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/f/fedora-release-identity-basic-33-0.15.noarch.rpm",
+        "checksum": "sha256:377e1ac03d5676a9c8449c655999ba48793d26254ec973667f00620015b29de6",
         "check_gpg": true
       },
       {
@@ -6504,6 +6548,26 @@
         "arch": "x86_64",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/f/findutils-4.7.0-7.fc33.x86_64.rpm",
         "checksum": "sha256:0fc62ef8c645c239295982a2e6436bd3604c367d82b48e145b65d20c1f9e8b35",
+        "check_gpg": true
+      },
+      {
+        "name": "firewalld",
+        "epoch": 0,
+        "version": "0.8.3",
+        "release": "2.fc33",
+        "arch": "noarch",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/f/firewalld-0.8.3-2.fc33.noarch.rpm",
+        "checksum": "sha256:451999cf28f01e01efb4bbe34ad9d5c4257e822eca40071e32dd96e376da9ffd",
+        "check_gpg": true
+      },
+      {
+        "name": "firewalld-filesystem",
+        "epoch": 0,
+        "version": "0.8.3",
+        "release": "2.fc33",
+        "arch": "noarch",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/f/firewalld-filesystem-0.8.3-2.fc33.noarch.rpm",
+        "checksum": "sha256:792234d5e2ff1e2bb3347ff8aa28a00b51e0ba27403abb0fbddf94e8dfd3a53f",
         "check_gpg": true
       },
       {
@@ -6654,6 +6718,16 @@
         "arch": "x86_64",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/g/gnutls-3.6.15-1.fc33.x86_64.rpm",
         "checksum": "sha256:a8a474e3c9125752d9636e3b8da5e788507500fe2f9c031eaf80a0051a46cc7c",
+        "check_gpg": true
+      },
+      {
+        "name": "gobject-introspection",
+        "epoch": 0,
+        "version": "1.66.0",
+        "release": "1.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/g/gobject-introspection-1.66.0-1.fc33.x86_64.rpm",
+        "checksum": "sha256:a015ff446272481d4bc99dfb6f0da629b5a44a8bf0d0d08b3bca5bebfe6252dd",
         "check_gpg": true
       },
       {
@@ -6827,6 +6901,26 @@
         "check_gpg": true
       },
       {
+        "name": "ipset",
+        "epoch": 0,
+        "version": "7.6",
+        "release": "2.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/i/ipset-7.6-2.fc33.x86_64.rpm",
+        "checksum": "sha256:4ce381cf2c13167c194c1f652c7bc0677a3d3d769c76e80c1bf61b45fbe23371",
+        "check_gpg": true
+      },
+      {
+        "name": "ipset-libs",
+        "epoch": 0,
+        "version": "7.6",
+        "release": "2.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/i/ipset-libs-7.6-2.fc33.x86_64.rpm",
+        "checksum": "sha256:4ec08f7f99f6b3b82a5f443aef01ff67f2ff718a63a4784d93a57fc5079bb117",
+        "check_gpg": true
+      },
+      {
         "name": "iptables-libs",
         "epoch": 0,
         "version": "1.8.5",
@@ -6834,6 +6928,16 @@
         "arch": "x86_64",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/i/iptables-libs-1.8.5-3.fc33.x86_64.rpm",
         "checksum": "sha256:4a869873c1957868fecc35c9736127372050494476e8ad2a93ba2d4ae34fe418",
+        "check_gpg": true
+      },
+      {
+        "name": "iptables-nft",
+        "epoch": 0,
+        "version": "1.8.5",
+        "release": "3.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/i/iptables-nft-1.8.5-3.fc33.x86_64.rpm",
+        "checksum": "sha256:19b86e744eb1b02b2e3295cd5ca63a65baa46c45c97be06b092d52227a9a8007",
         "check_gpg": true
       },
       {
@@ -6897,6 +7001,16 @@
         "check_gpg": true
       },
       {
+        "name": "kernel",
+        "epoch": 0,
+        "version": "5.8.11",
+        "release": "300.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/k/kernel-5.8.11-300.fc33.x86_64.rpm",
+        "checksum": "sha256:40a3d2dd07b985acc1624d13d1440f6ab6d8c6be05620de6b8aaf4bcd4392ffb",
+        "check_gpg": true
+      },
+      {
         "name": "kernel-core",
         "epoch": 0,
         "version": "5.8.11",
@@ -6904,6 +7018,16 @@
         "arch": "x86_64",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/k/kernel-core-5.8.11-300.fc33.x86_64.rpm",
         "checksum": "sha256:dd8689a7ec253dd24248e8e06fb74958fa09cfbc8e215824cac6d8186b943e72",
+        "check_gpg": true
+      },
+      {
+        "name": "kernel-modules",
+        "epoch": 0,
+        "version": "5.8.11",
+        "release": "300.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/k/kernel-modules-5.8.11-300.fc33.x86_64.rpm",
+        "checksum": "sha256:a64eacf9e4c4636d097ccbe0a31f31eb0213c2658d83448fd77ecc636475968b",
         "check_gpg": true
       },
       {
@@ -6994,6 +7118,86 @@
         "arch": "x86_64",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/less-551-4.fc33.x86_64.rpm",
         "checksum": "sha256:d835bbf3799b4514447cdffff2367e2352828e61902346fe8575e1bba132a540",
+        "check_gpg": true
+      },
+      {
+        "name": "libX11",
+        "epoch": 0,
+        "version": "1.6.12",
+        "release": "1.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libX11-1.6.12-1.fc33.x86_64.rpm",
+        "checksum": "sha256:f710fd960d25f3b1055220e96fd9fba179dc1187f5b2f506dfda84dbefd74932",
+        "check_gpg": true
+      },
+      {
+        "name": "libX11-common",
+        "epoch": 0,
+        "version": "1.6.12",
+        "release": "1.fc33",
+        "arch": "noarch",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libX11-common-1.6.12-1.fc33.noarch.rpm",
+        "checksum": "sha256:936368a9632e9a23a8b21c4cde6d58eb1abe3c7ac58ff165592e6e9791d50d4f",
+        "check_gpg": true
+      },
+      {
+        "name": "libXau",
+        "epoch": 0,
+        "version": "1.0.9",
+        "release": "4.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libXau-1.0.9-4.fc33.x86_64.rpm",
+        "checksum": "sha256:c0bb5ee144010e8aee39f658a5a47ec8690af69172399ec05726360945f1674f",
+        "check_gpg": true
+      },
+      {
+        "name": "libXext",
+        "epoch": 0,
+        "version": "1.3.4",
+        "release": "4.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libXext-1.3.4-4.fc33.x86_64.rpm",
+        "checksum": "sha256:1c4a60013eeec3406e5fdadba5e410eb4d67fa86dc63a017cda1765a4c6e99b9",
+        "check_gpg": true
+      },
+      {
+        "name": "libXfixes",
+        "epoch": 0,
+        "version": "5.0.3",
+        "release": "12.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libXfixes-5.0.3-12.fc33.x86_64.rpm",
+        "checksum": "sha256:def04d661f9487f4ec107c8c23602ee6ad8b6bdfed136d6773670673f9400d10",
+        "check_gpg": true
+      },
+      {
+        "name": "libXinerama",
+        "epoch": 0,
+        "version": "1.1.4",
+        "release": "6.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libXinerama-1.1.4-6.fc33.x86_64.rpm",
+        "checksum": "sha256:f2e69fcdb81411630a2d8c562741cba5b07f129c7ba82254b04b48417e260df8",
+        "check_gpg": true
+      },
+      {
+        "name": "libXrandr",
+        "epoch": 0,
+        "version": "1.5.2",
+        "release": "4.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libXrandr-1.5.2-4.fc33.x86_64.rpm",
+        "checksum": "sha256:9a986defaa095ea38313840427993f5afe47ef63ed6dbf0122b9163967fa2e25",
+        "check_gpg": true
+      },
+      {
+        "name": "libXrender",
+        "epoch": 0,
+        "version": "0.9.10",
+        "release": "12.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libXrender-0.9.10-12.fc33.x86_64.rpm",
+        "checksum": "sha256:9fa67fa95bf4e384c2088023606ab08cf325e5ba3262aa53c454d8779824cc78",
         "check_gpg": true
       },
       {
@@ -7174,6 +7378,16 @@
         "arch": "x86_64",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libdnf-0.48.0-4.fc33.x86_64.rpm",
         "checksum": "sha256:ecebd6e9ddcd886842ca7444c6db36904a4981acab884b6d54afc00ddcd2e5c5",
+        "check_gpg": true
+      },
+      {
+        "name": "libdrm",
+        "epoch": 0,
+        "version": "2.4.102",
+        "release": "2.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libdrm-2.4.102-2.fc33.x86_64.rpm",
+        "checksum": "sha256:f87a6d4a2dc0be7abd56ba48b1913856b08205de95f033a0ab6c34fb0f893752",
         "check_gpg": true
       },
       {
@@ -7437,6 +7651,16 @@
         "check_gpg": true
       },
       {
+        "name": "libnftnl",
+        "epoch": 0,
+        "version": "1.1.7",
+        "release": "3.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libnftnl-1.1.7-3.fc33.x86_64.rpm",
+        "checksum": "sha256:984f215f7f0fe4961026939892ab651416899244ed2230b3aa4c82e18d7dfbed",
+        "check_gpg": true
+      },
+      {
         "name": "libnghttp2",
         "epoch": 0,
         "version": "1.41.0",
@@ -7484,6 +7708,16 @@
         "arch": "x86_64",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libpcap-1.9.1-5.fc33.x86_64.rpm",
         "checksum": "sha256:9c8d18c24626a6a022d0087a61f23d0056f3504cd43b56ca61777f3aac95d7dd",
+        "check_gpg": true
+      },
+      {
+        "name": "libpciaccess",
+        "epoch": 0,
+        "version": "0.16",
+        "release": "3.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libpciaccess-0.16-3.fc33.x86_64.rpm",
+        "checksum": "sha256:7b6c64812a5981b5d4c523862c0162e2c6c5e1fb81188184e7c46c5152e29f3d",
         "check_gpg": true
       },
       {
@@ -7847,6 +8081,16 @@
         "check_gpg": true
       },
       {
+        "name": "libxcb",
+        "epoch": 0,
+        "version": "1.13.1",
+        "release": "5.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/l/libxcb-1.13.1-5.fc33.x86_64.rpm",
+        "checksum": "sha256:9df24baef091f324f92cb117429007e54488a0f4456c65402f4fec1fce1ddf9e",
+        "check_gpg": true
+      },
+      {
         "name": "libxcrypt",
         "epoch": 0,
         "version": "4.4.17",
@@ -8007,16 +8251,6 @@
         "check_gpg": true
       },
       {
-        "name": "mtools",
-        "epoch": 0,
-        "version": "4.0.24",
-        "release": "3.fc33",
-        "arch": "x86_64",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/m/mtools-4.0.24-3.fc33.x86_64.rpm",
-        "checksum": "sha256:67ac6db0877f2fed815839fa0f7d60475261483cb13e2f0e9f1be814fe83e8e2",
-        "check_gpg": true
-      },
-      {
         "name": "ncurses",
         "epoch": 0,
         "version": "6.2",
@@ -8064,6 +8298,16 @@
         "arch": "x86_64",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/n/nettle-3.6-3.fc33.x86_64.rpm",
         "checksum": "sha256:5d8870dad6187c05f1a4599bf9fe16f8e3d3254c87a93a7f21bcf50579e10a07",
+        "check_gpg": true
+      },
+      {
+        "name": "nftables",
+        "epoch": 1,
+        "version": "0.9.3",
+        "release": "6.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/n/nftables-0.9.3-6.fc33.x86_64.rpm",
+        "checksum": "sha256:6d2694c755cd88eaef1f1037050658786f64b83ab5b908211774052cefe3f953",
         "check_gpg": true
       },
       {
@@ -8267,6 +8511,36 @@
         "check_gpg": true
       },
       {
+        "name": "plymouth",
+        "epoch": 0,
+        "version": "0.9.4",
+        "release": "16.20200325gite31c81f.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/plymouth-0.9.4-16.20200325gite31c81f.fc33.x86_64.rpm",
+        "checksum": "sha256:77554fc172b008324f5169c4dd9acdfe2fc90750b862a0fd7a57568f126feb97",
+        "check_gpg": true
+      },
+      {
+        "name": "plymouth-core-libs",
+        "epoch": 0,
+        "version": "0.9.4",
+        "release": "16.20200325gite31c81f.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/plymouth-core-libs-0.9.4-16.20200325gite31c81f.fc33.x86_64.rpm",
+        "checksum": "sha256:67680e21b02f48469ed388272b761ad049fcef854c5915baca620974646fb0ba",
+        "check_gpg": true
+      },
+      {
+        "name": "plymouth-scripts",
+        "epoch": 0,
+        "version": "0.9.4",
+        "release": "16.20200325gite31c81f.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/plymouth-scripts-0.9.4-16.20200325gite31c81f.fc33.x86_64.rpm",
+        "checksum": "sha256:93c8a8e5c03d71657c96e48ca2f295f4e1af9f7f3e17b7a7888bfe2a8ca263fb",
+        "check_gpg": true
+      },
+      {
         "name": "policycoreutils",
         "epoch": 0,
         "version": "3.1",
@@ -8447,6 +8721,16 @@
         "check_gpg": true
       },
       {
+        "name": "python3-decorator",
+        "epoch": 0,
+        "version": "4.4.2",
+        "release": "3.fc33",
+        "arch": "noarch",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-decorator-4.4.2-3.fc33.noarch.rpm",
+        "checksum": "sha256:879488c2eda967d8bff8f898909060b6a1611202a5a2ca3e668668e434840ae6",
+        "check_gpg": true
+      },
+      {
         "name": "python3-distro",
         "epoch": 0,
         "version": "1.5.0",
@@ -8474,6 +8758,26 @@
         "arch": "noarch",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-dnf-plugins-core-4.0.16-4.fc33.noarch.rpm",
         "checksum": "sha256:4ddb4a5054bd81371a6f9c9ad9ebf1ec96460d989894e4e0d39848ab7ca3ec90",
+        "check_gpg": true
+      },
+      {
+        "name": "python3-firewall",
+        "epoch": 0,
+        "version": "0.8.3",
+        "release": "2.fc33",
+        "arch": "noarch",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-firewall-0.8.3-2.fc33.noarch.rpm",
+        "checksum": "sha256:23bbee54f63c0f6f9834bda782faa01bab57428b712529e8241ae6f791e219c2",
+        "check_gpg": true
+      },
+      {
+        "name": "python3-gobject-base",
+        "epoch": 0,
+        "version": "3.38.0",
+        "release": "1.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-gobject-base-3.38.0-1.fc33.x86_64.rpm",
+        "checksum": "sha256:ea4f7d09beb825faa465ec60608b38ffd2bf04ed8ee3935b6359b685cfe0951a",
         "check_gpg": true
       },
       {
@@ -8624,6 +8928,16 @@
         "arch": "x86_64",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-markupsafe-1.1.1-7.fc33.x86_64.rpm",
         "checksum": "sha256:ee05023a457c6b1390f774fe2ad08ca19d2a62986b086a0b4974e4f72785d8b9",
+        "check_gpg": true
+      },
+      {
+        "name": "python3-nftables",
+        "epoch": 1,
+        "version": "0.9.3",
+        "release": "6.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-nftables-0.9.3-6.fc33.x86_64.rpm",
+        "checksum": "sha256:f2c29984e54bcdbcdf1eae6bfdade96af65cadca5ebcdb7b2a967f7a62dff8c1",
         "check_gpg": true
       },
       {
@@ -8797,6 +9111,26 @@
         "check_gpg": true
       },
       {
+        "name": "python3-slip",
+        "epoch": 0,
+        "version": "0.6.4",
+        "release": "21.fc33",
+        "arch": "noarch",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-slip-0.6.4-21.fc33.noarch.rpm",
+        "checksum": "sha256:bb78a15cb79544eccdd607593f7b0440dfb84b3d698ca3c2cee4e61177d2e983",
+        "check_gpg": true
+      },
+      {
+        "name": "python3-slip-dbus",
+        "epoch": 0,
+        "version": "0.6.4",
+        "release": "21.fc33",
+        "arch": "noarch",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-slip-dbus-0.6.4-21.fc33.noarch.rpm",
+        "checksum": "sha256:1b313323c5adc6624a3678d406d1da566a83a66b925c15edc0ad6cd6530e314a",
+        "check_gpg": true
+      },
+      {
         "name": "python3-unbound",
         "epoch": 0,
         "version": "1.10.1",
@@ -8814,6 +9148,16 @@
         "arch": "noarch",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/p/python3-urllib3-1.25.8-4.fc33.noarch.rpm",
         "checksum": "sha256:62b1639bc39c37c97b08989d583e18c8dcf4601381e9bd9056bd8c4b5ba24f16",
+        "check_gpg": true
+      },
+      {
+        "name": "qemu-guest-agent",
+        "epoch": 2,
+        "version": "5.1.0",
+        "release": "5.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/q/qemu-guest-agent-5.1.0-5.fc33.x86_64.rpm",
+        "checksum": "sha256:865464cf9ca5bfafa3dc130f87021b00005af36ceb481ac1fe2508f27ae42bb6",
         "check_gpg": true
       },
       {
@@ -8917,16 +9261,6 @@
         "check_gpg": true
       },
       {
-        "name": "rsync",
-        "epoch": 0,
-        "version": "3.2.3",
-        "release": "1.fc33",
-        "arch": "x86_64",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/r/rsync-3.2.3-1.fc33.x86_64.rpm",
-        "checksum": "sha256:2e8c72fe69b653572fe4ae88478272b641eabe7131a89585505f3f6a0cb1d8e2",
-        "check_gpg": true
-      },
-      {
         "name": "sed",
         "epoch": 0,
         "version": "4.8",
@@ -8984,6 +9318,16 @@
         "arch": "x86_64",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/shared-mime-info-2.0-3.fc33.x86_64.rpm",
         "checksum": "sha256:a7f614c850d55138f4600159b68cc25fb0d2c4fddebe8969a0ddec76ca6483bc",
+        "check_gpg": true
+      },
+      {
+        "name": "spice-vdagent",
+        "epoch": 0,
+        "version": "0.20.0",
+        "release": "3.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/spice-vdagent-0.20.0-3.fc33.x86_64.rpm",
+        "checksum": "sha256:145be56e4fbc3061ed8a5923eabe328f70943d2d4c4381ecc9871ae4c82c6a0a",
         "check_gpg": true
       },
       {
@@ -9047,46 +9391,6 @@
         "check_gpg": true
       },
       {
-        "name": "syslinux",
-        "epoch": 0,
-        "version": "6.04",
-        "release": "0.16.fc33",
-        "arch": "x86_64",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/syslinux-6.04-0.16.fc33.x86_64.rpm",
-        "checksum": "sha256:304cb90329d2eabe3d44e774758d296e594c0a647a2009212529e8eb0cb94c21",
-        "check_gpg": true
-      },
-      {
-        "name": "syslinux-extlinux",
-        "epoch": 0,
-        "version": "6.04",
-        "release": "0.16.fc33",
-        "arch": "x86_64",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/syslinux-extlinux-6.04-0.16.fc33.x86_64.rpm",
-        "checksum": "sha256:a4c50b0175c112e5cbfc180e3468eca871ba1289f9e287f9e397b163ddd764a6",
-        "check_gpg": true
-      },
-      {
-        "name": "syslinux-extlinux-nonlinux",
-        "epoch": 0,
-        "version": "6.04",
-        "release": "0.16.fc33",
-        "arch": "noarch",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/syslinux-extlinux-nonlinux-6.04-0.16.fc33.noarch.rpm",
-        "checksum": "sha256:af2777ec0c6ee867b5ecad024de55fce1afccb5567cd48501611e073536d332f",
-        "check_gpg": true
-      },
-      {
-        "name": "syslinux-nonlinux",
-        "epoch": 0,
-        "version": "6.04",
-        "release": "0.16.fc33",
-        "arch": "noarch",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/syslinux-nonlinux-6.04-0.16.fc33.noarch.rpm",
-        "checksum": "sha256:a89afa93b4570d941838daa89cfaa671fa11559626c9ed976b15a63a9b3c5e4e",
-        "check_gpg": true
-      },
-      {
         "name": "systemd",
         "epoch": 0,
         "version": "246.4",
@@ -9134,16 +9438,6 @@
         "arch": "x86_64",
         "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/s/systemd-udev-246.4-2.fc33.x86_64.rpm",
         "checksum": "sha256:d9050393cb28556db6e8e74a33c7cc49bee8bc245a93f72afeba50bd00312a5d",
-        "check_gpg": true
-      },
-      {
-        "name": "tar",
-        "epoch": 2,
-        "version": "1.32",
-        "release": "6.fc33",
-        "arch": "x86_64",
-        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/t/tar-1.32-6.fc33.x86_64.rpm",
-        "checksum": "sha256:871dc18514b9b64bcff6c4c61fd4c1a9f4c1e46cddd6f6934b4ee93662541aca",
         "check_gpg": true
       },
       {
@@ -9237,6 +9531,26 @@
         "check_gpg": true
       },
       {
+        "name": "xen-libs",
+        "epoch": 0,
+        "version": "4.14.0",
+        "release": "5.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/x/xen-libs-4.14.0-5.fc33.x86_64.rpm",
+        "checksum": "sha256:4647f865c1b8500cf3ad58d458279c6e8a3d702cea91566c8ca9cf8182694064",
+        "check_gpg": true
+      },
+      {
+        "name": "xen-licenses",
+        "epoch": 0,
+        "version": "4.14.0",
+        "release": "5.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/x/xen-licenses-4.14.0-5.fc33.x86_64.rpm",
+        "checksum": "sha256:ce611e9fed2d272070e3f42c963a1108af52cfe2d0c3d6b0d9e550f98b5e3d7b",
+        "check_gpg": true
+      },
+      {
         "name": "xfsprogs",
         "epoch": 0,
         "version": "5.7.0",
@@ -9277,6 +9591,16 @@
         "check_gpg": true
       },
       {
+        "name": "yajl",
+        "epoch": 0,
+        "version": "2.1.0",
+        "release": "15.fc33",
+        "arch": "x86_64",
+        "remote_location": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/Packages/y/yajl-2.1.0-15.fc33.x86_64.rpm",
+        "checksum": "sha256:bbfd6ad6b0aa4adeae2770ecfee7521ee487de40294bfda2e5ffedf21fbffae2",
+        "check_gpg": true
+      },
+      {
         "name": "yum",
         "epoch": 0,
         "version": "4.2.23",
@@ -9313,7 +9637,7 @@
   },
   "image-info": {
     "boot-environment": {
-      "kernelopts": "root=UUID=76a22bf4-f153-4541-b6c7-0332c0dfaeac  debug"
+      "kernelopts": "root=UUID=76a22bf4-f153-4541-b6c7-0332c0dfaeac"
     },
     "bootloader": "grub",
     "bootmenu": [
@@ -9324,9 +9648,14 @@
         "initrd": "/boot/initramfs-5.8.11-300.fc33.x86_64.img",
         "linux": "/boot/vmlinuz-5.8.11-300.fc33.x86_64",
         "options": "root=UUID=76a22bf4-f153-4541-b6c7-0332c0dfaeac ro no_timer_check net.ifnames=0 console=tty1 console=ttyS0,115200n8",
-        "title": "Fedora (5.8.11-300.fc33.x86_64) 33 (Cloud Edition Prerelease)",
+        "title": "Fedora (5.8.11-300.fc33.x86_64) 33 (Thirty Three Prerelease)",
         "version": "5.8.11-300.fc33.x86_64"
       }
+    ],
+    "firewall-enabled": [
+      "ssh",
+      "mdns",
+      "dhcpv6-client"
     ],
     "fstab": [
       [
@@ -9351,8 +9680,6 @@
       "floppy:x:19:",
       "ftp:x:50:",
       "games:x:20:",
-      "group1:x:1030:user2",
-      "group2:x:1050:",
       "input:x:999:",
       "kmem:x:9:",
       "kvm:x:36:",
@@ -9362,6 +9689,7 @@
       "man:x:15:",
       "mem:x:8:",
       "nobody:x:65534:",
+      "redhat:x:1000:",
       "render:x:998:",
       "root:x:0:",
       "ssh_keys:x:995:",
@@ -9376,7 +9704,6 @@
       "tss:x:59:",
       "tty:x:5:",
       "unbound:x:994:",
-      "user1:x:1000:",
       "users:x:100:",
       "utempter:x:35:",
       "utmp:x:22:",
@@ -9395,16 +9722,14 @@
       "LOGO": "fedora-logo-icon",
       "NAME": "Fedora",
       "PLATFORM_ID": "platform:f33",
-      "PRETTY_NAME": "Fedora 33 (Cloud Edition Prerelease)",
+      "PRETTY_NAME": "Fedora 33 (Thirty Three Prerelease)",
       "PRIVACY_POLICY_URL": "https://fedoraproject.org/wiki/Legal:PrivacyPolicy",
       "REDHAT_BUGZILLA_PRODUCT": "Fedora",
       "REDHAT_BUGZILLA_PRODUCT_VERSION": "33",
       "REDHAT_SUPPORT_PRODUCT": "Fedora",
       "REDHAT_SUPPORT_PRODUCT_VERSION": "33",
       "SUPPORT_URL": "https://fedoraproject.org/wiki/Communicating_and_getting_help",
-      "VARIANT": "Cloud Edition",
-      "VARIANT_ID": "cloud",
-      "VERSION": "33 (Cloud Edition Prerelease)",
+      "VERSION": "33 (Thirty Three Prerelease)",
       "VERSION_CODENAME": "",
       "VERSION_ID": "33"
     },
@@ -9412,6 +9737,8 @@
       "NetworkManager-1.26.2-2.fc33.x86_64",
       "NetworkManager-libnm-1.26.2-2.fc33.x86_64",
       "acl-2.2.53-9.fc33.x86_64",
+      "alsa-lib-1.2.3.2-5.fc33.x86_64",
+      "alsa-sof-firmware-1.5-2.fc33.noarch",
       "alternatives-1.14-3.fc33.x86_64",
       "audit-3.0-0.21.20191104git1c2f876.fc33.x86_64",
       "audit-libs-3.0-0.21.20191104git1c2f876.fc33.x86_64",
@@ -9423,11 +9750,6 @@
       "checkpolicy-3.1-3.fc33.x86_64",
       "chrony-4.0-0.9.pre4.fc33.x86_64",
       "cloud-init-19.4-7.fc33.noarch",
-      "cloud-utils-growpart-0.31-7.fc33.noarch",
-      "console-login-helper-messages-0.19-2.fc33.noarch",
-      "console-login-helper-messages-issuegen-0.19-2.fc33.noarch",
-      "console-login-helper-messages-motdgen-0.19-2.fc33.noarch",
-      "console-login-helper-messages-profile-0.19-2.fc33.noarch",
       "coreutils-8.32-12.fc33.x86_64",
       "coreutils-common-8.32-12.fc33.x86_64",
       "cpio-2.13-8.fc33.x86_64",
@@ -9462,15 +9784,17 @@
       "elfutils-libs-0.181-1.fc33.x86_64",
       "expat-2.2.8-3.fc33.x86_64",
       "fedora-gpg-keys-33-0.13.noarch",
-      "fedora-release-cloud-33-0.15.noarch",
+      "fedora-release-33-0.15.noarch",
       "fedora-release-common-33-0.15.noarch",
-      "fedora-release-identity-cloud-33-0.15.noarch",
+      "fedora-release-identity-basic-33-0.15.noarch",
       "fedora-repos-33-0.13.noarch",
       "fedora-repos-modular-33-0.13.noarch",
       "file-5.39-3.fc33.x86_64",
       "file-libs-5.39-3.fc33.x86_64",
       "filesystem-3.14-3.fc33.x86_64",
       "findutils-4.7.0-7.fc33.x86_64",
+      "firewalld-0.8.3-2.fc33.noarch",
+      "firewalld-filesystem-0.8.3-2.fc33.noarch",
       "fonts-filesystem-2.0.5-4.fc33.noarch",
       "fuse-libs-2.9.9-10.fc33.x86_64",
       "gawk-5.1.0-2.fc33.x86_64",
@@ -9486,6 +9810,7 @@
       "gnupg2-2.2.23-1.fc33.x86_64",
       "gnupg2-smime-2.2.23-1.fc33.x86_64",
       "gnutls-3.6.15-1.fc33.x86_64",
+      "gobject-introspection-1.66.0-1.fc33.x86_64",
       "gpg-pubkey-9570ff31-5e3006fb",
       "gpgme-1.14.0-2.fc33.x86_64",
       "grep-3.4-5.fc33.x86_64",
@@ -9504,14 +9829,19 @@
       "ipcalc-0.4.1-2.fc33.x86_64",
       "iproute-5.8.0-1.fc33.x86_64",
       "iproute-tc-5.8.0-1.fc33.x86_64",
+      "ipset-7.6-2.fc33.x86_64",
+      "ipset-libs-7.6-2.fc33.x86_64",
       "iptables-libs-1.8.5-3.fc33.x86_64",
+      "iptables-nft-1.8.5-3.fc33.x86_64",
       "iputils-20190515-8.fc33.x86_64",
       "jansson-2.13.1-1.fc33.x86_64",
       "json-c-0.14-7.fc33.x86_64",
       "kbd-2.3.0-2.fc33.x86_64",
       "kbd-legacy-2.3.0-2.fc33.noarch",
       "kbd-misc-2.3.0-2.fc33.noarch",
+      "kernel-5.8.11-300.fc33.x86_64",
       "kernel-core-5.8.11-300.fc33.x86_64",
+      "kernel-modules-5.8.11-300.fc33.x86_64",
       "keyutils-libs-1.6-5.fc33.x86_64",
       "kmod-27-3.fc33.x86_64",
       "kmod-libs-27-3.fc33.x86_64",
@@ -9521,6 +9851,14 @@
       "langpacks-core-font-en-3.0-4.fc33.noarch",
       "langpacks-en-3.0-4.fc33.noarch",
       "less-551-4.fc33.x86_64",
+      "libX11-1.6.12-1.fc33.x86_64",
+      "libX11-common-1.6.12-1.fc33.noarch",
+      "libXau-1.0.9-4.fc33.x86_64",
+      "libXext-1.3.4-4.fc33.x86_64",
+      "libXfixes-5.0.3-12.fc33.x86_64",
+      "libXinerama-1.1.4-6.fc33.x86_64",
+      "libXrandr-1.5.2-4.fc33.x86_64",
+      "libXrender-0.9.10-12.fc33.x86_64",
       "libacl-2.2.53-9.fc33.x86_64",
       "libarchive-3.4.3-3.fc33.x86_64",
       "libargon2-20171227-5.fc33.x86_64",
@@ -9539,6 +9877,7 @@
       "libdb-5.3.28-44.fc33.x86_64",
       "libdhash-0.5.0-46.fc33.x86_64",
       "libdnf-0.48.0-4.fc33.x86_64",
+      "libdrm-2.4.102-2.fc33.x86_64",
       "libeconf-0.3.8-4.fc33.x86_64",
       "libedit-3.1-33.20191231cvs.fc33.x86_64",
       "libevent-2.1.8-10.fc33.x86_64",
@@ -9565,11 +9904,13 @@
       "libnetfilter_conntrack-1.0.7-5.fc33.x86_64",
       "libnfnetlink-1.0.1-18.fc33.x86_64",
       "libnfsidmap-2.5.1-4.rc4.fc33.x86_64",
+      "libnftnl-1.1.7-3.fc33.x86_64",
       "libnghttp2-1.41.0-3.fc33.x86_64",
       "libnl3-3.5.0-5.fc33.x86_64",
       "libnsl2-1.2.0-8.20180605git4a062cf.fc33.x86_64",
       "libpath_utils-0.2.1-46.fc33.x86_64",
       "libpcap-1.9.1-5.fc33.x86_64",
+      "libpciaccess-0.16-3.fc33.x86_64",
       "libpipeline-1.5.2-5.fc33.x86_64",
       "libpsl-0.21.1-2.fc33.x86_64",
       "libpwquality-1.4.2-5.fc33.x86_64",
@@ -9606,6 +9947,7 @@
       "libutempter-1.2.1-2.fc33.x86_64",
       "libuuid-2.36-3.fc33.x86_64",
       "libverto-0.3.0-10.fc33.x86_64",
+      "libxcb-1.13.1-5.fc33.x86_64",
       "libxcrypt-4.4.17-1.fc33.x86_64",
       "libxcrypt-compat-4.4.17-1.fc33.x86_64",
       "libxkbcommon-1.0.1-1.fc33.x86_64",
@@ -9622,12 +9964,12 @@
       "memstrack-0.1.9-1.fc33.x86_64",
       "mkpasswd-5.5.6-2.fc33.x86_64",
       "mpfr-4.1.0-2.fc33.x86_64",
-      "mtools-4.0.24-3.fc33.x86_64",
       "ncurses-6.2-3.20200222.fc33.x86_64",
       "ncurses-base-6.2-3.20200222.fc33.noarch",
       "ncurses-libs-6.2-3.20200222.fc33.x86_64",
       "net-tools-2.0-0.58.20160912git.fc33.x86_64",
       "nettle-3.6-3.fc33.x86_64",
+      "nftables-0.9.3-6.fc33.x86_64",
       "npth-1.6-5.fc33.x86_64",
       "openldap-2.4.50-5.fc33.x86_64",
       "openssh-8.3p1-4.fc33.x86_64",
@@ -9648,6 +9990,9 @@
       "pcre2-syntax-10.35-6.fc33.noarch",
       "pigz-2.4-7.fc33.x86_64",
       "pinentry-1.1.0-8.fc33.x86_64",
+      "plymouth-0.9.4-16.20200325gite31c81f.fc33.x86_64",
+      "plymouth-core-libs-0.9.4-16.20200325gite31c81f.fc33.x86_64",
+      "plymouth-scripts-0.9.4-16.20200325gite31c81f.fc33.x86_64",
       "policycoreutils-3.1-4.fc33.x86_64",
       "popt-1.18-2.fc33.x86_64",
       "procps-ng-3.3.16-1.fc33.x86_64",
@@ -9666,9 +10011,12 @@
       "python3-cryptography-3.0-2.fc33.x86_64",
       "python3-dateutil-2.8.1-2.fc33.noarch",
       "python3-dbus-1.2.16-3.fc33.x86_64",
+      "python3-decorator-4.4.2-3.fc33.noarch",
       "python3-distro-1.5.0-4.fc33.noarch",
       "python3-dnf-4.2.23-2.fc33.noarch",
       "python3-dnf-plugins-core-4.0.16-4.fc33.noarch",
+      "python3-firewall-0.8.3-2.fc33.noarch",
+      "python3-gobject-base-3.38.0-1.fc33.x86_64",
       "python3-gpg-1.14.0-2.fc33.x86_64",
       "python3-hawkey-0.48.0-4.fc33.x86_64",
       "python3-idna-2.10-2.fc33.noarch",
@@ -9684,6 +10032,7 @@
       "python3-libselinux-3.1-2.fc33.x86_64",
       "python3-libsemanage-3.1-2.fc33.x86_64",
       "python3-markupsafe-1.1.1-7.fc33.x86_64",
+      "python3-nftables-0.9.3-6.fc33.x86_64",
       "python3-oauthlib+signedtoken-3.0.2-8.fc33.noarch",
       "python3-oauthlib-3.0.2-8.fc33.noarch",
       "python3-pip-20.2.2-1.fc33.noarch",
@@ -9701,8 +10050,11 @@
       "python3-setools-4.3.0-5.fc33.x86_64",
       "python3-setuptools-49.1.3-1.fc33.noarch",
       "python3-six-1.15.0-2.fc33.noarch",
+      "python3-slip-0.6.4-21.fc33.noarch",
+      "python3-slip-dbus-0.6.4-21.fc33.noarch",
       "python3-unbound-1.10.1-4.fc33.x86_64",
       "python3-urllib3-1.25.8-4.fc33.noarch",
+      "qemu-guest-agent-5.1.0-5.fc33.x86_64",
       "qrencode-libs-4.0.2-6.fc33.x86_64",
       "rdma-core-31.0-1.fc33.x86_64",
       "readline-8.0-5.fc33.x86_64",
@@ -9713,29 +10065,24 @@
       "rpm-plugin-selinux-4.16.0-0.rc1.1.fc33.x86_64",
       "rpm-plugin-systemd-inhibit-4.16.0-0.rc1.1.fc33.x86_64",
       "rpm-sign-libs-4.16.0-0.rc1.1.fc33.x86_64",
-      "rsync-3.2.3-1.fc33.x86_64",
       "sed-4.8-5.fc33.x86_64",
       "selinux-policy-3.14.6-27.fc33.noarch",
       "selinux-policy-targeted-3.14.6-27.fc33.noarch",
       "setup-2.13.7-2.fc33.noarch",
       "shadow-utils-4.8.1-4.fc33.x86_64",
       "shared-mime-info-2.0-3.fc33.x86_64",
+      "spice-vdagent-0.20.0-3.fc33.x86_64",
       "sqlite-libs-3.33.0-1.fc33.x86_64",
       "sssd-client-2.3.1-4.fc33.x86_64",
       "sssd-common-2.3.1-4.fc33.x86_64",
       "sssd-kcm-2.3.1-4.fc33.x86_64",
       "sssd-nfs-idmap-2.3.1-4.fc33.x86_64",
       "sudo-1.9.2-1.fc33.x86_64",
-      "syslinux-6.04-0.16.fc33.x86_64",
-      "syslinux-extlinux-6.04-0.16.fc33.x86_64",
-      "syslinux-extlinux-nonlinux-6.04-0.16.fc33.noarch",
-      "syslinux-nonlinux-6.04-0.16.fc33.noarch",
       "systemd-246.4-2.fc33.x86_64",
       "systemd-libs-246.4-2.fc33.x86_64",
       "systemd-pam-246.4-2.fc33.x86_64",
       "systemd-rpm-macros-246.4-2.fc33.noarch",
       "systemd-udev-246.4-2.fc33.x86_64",
-      "tar-1.32-6.fc33.x86_64",
       "tpm2-tss-3.0.1-1.fc33.x86_64",
       "trousers-0.3.14-3.fc33.x86_64",
       "trousers-lib-0.3.14-3.fc33.x86_64",
@@ -9745,10 +10092,13 @@
       "vim-minimal-8.2.1551-1.fc33.x86_64",
       "which-2.21-20.fc33.x86_64",
       "whois-nls-5.5.6-2.fc33.noarch",
+      "xen-libs-4.14.0-5.fc33.x86_64",
+      "xen-licenses-4.14.0-5.fc33.x86_64",
       "xfsprogs-5.7.0-1.fc33.x86_64",
       "xkeyboard-config-2.30-3.fc33.noarch",
       "xz-5.2.5-3.fc33.x86_64",
       "xz-libs-5.2.5-3.fc33.x86_64",
+      "yajl-2.1.0-15.fc33.x86_64",
       "yum-4.2.23-2.fc33.noarch",
       "zchunk-libs-1.1.5-3.fc33.x86_64",
       "zlib-1.2.11-22.fc33.x86_64"
@@ -9780,6 +10130,7 @@
       "mail:x:8:12:mail:/var/spool/mail:/sbin/nologin",
       "nobody:x:65534:65534:Kernel Overflow User:/:/sbin/nologin",
       "operator:x:11:0:operator:/root:/sbin/nologin",
+      "redhat:x:1000:1000::/home/redhat:/bin/bash",
       "root:x:0:0:root:/root:/bin/bash",
       "shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown",
       "sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin",
@@ -9789,15 +10140,12 @@
       "systemd-resolve:x:193:193:systemd Resolver:/:/sbin/nologin",
       "systemd-timesync:x:998:996:systemd Time Synchronization:/:/sbin/nologin",
       "tss:x:59:59:Account used for TPM access:/dev/null:/sbin/nologin",
-      "unbound:x:997:994:Unbound DNS resolver:/etc/unbound:/sbin/nologin",
-      "user1:x:1000:1000::/home/user1:/bin/bash",
-      "user2:x:1020:1050:description 2:/home/home2:/bin/sh"
+      "unbound:x:997:994:Unbound DNS resolver:/etc/unbound:/sbin/nologin"
     ],
     "rpm-verify": {
       "changed": {
         "/boot/System.map-5.8.11-300.fc33.x86_64": ".M.......",
         "/boot/initramfs-5.8.11-300.fc33.x86_64.img": ".M.......",
-        "/etc/chrony.conf": "S.5....T.",
         "/etc/udev/hwdb.bin": ".M.......",
         "/lib/modules/5.8.11-300.fc33.x86_64/modules.builtin.alias.bin": ".......T.",
         "/proc": ".M.......",
@@ -9813,18 +10161,13 @@
       "chrony-dnssrv@.timer",
       "chrony-wait.service",
       "console-getty.service",
-      "console-login-helper-messages-gensnippet-os-release.service",
-      "console-login-helper-messages-gensnippet-ssh-keys.service",
-      "console-login-helper-messages-issuegen.path",
-      "console-login-helper-messages-issuegen.service",
-      "console-login-helper-messages-motdgen.path",
-      "console-login-helper-messages-motdgen.service",
       "debug-shell.service",
       "exit.target",
       "halt.target",
       "kexec.target",
       "loadmodules.service",
       "man-db-restart-cache-update.service",
+      "nftables.service",
       "nis-domainname.service",
       "poweroff.target",
       "proc-sys-fs-binfmt_misc.mount",
@@ -9833,6 +10176,7 @@
       "remote-cryptsetup.target",
       "serial-getty@.service",
       "sshd-keygen@.service",
+      "sshd.socket",
       "sssd-autofs.socket",
       "sssd-nss.socket",
       "sssd-pac.socket",
@@ -9863,15 +10207,16 @@
       "dbus-broker.service",
       "dbus.socket",
       "dnf-makecache.timer",
+      "firewalld.service",
       "fstrim.timer",
       "getty@.service",
       "import-state.service",
+      "qemu-guest-agent.service",
       "reboot.target",
       "remote-fs.target",
       "rpmdb-rebuild.service",
       "selinux-autorelabel-mark.service",
       "sshd.service",
-      "sshd.socket",
       "sssd-kcm.socket",
       "sssd.service",
       "systemd-homed.service",
@@ -9879,6 +10224,6 @@
       "systemd-userdbd.socket",
       "unbound-anchor.timer"
     ],
-    "timezone": "London"
+    "timezone": "UTC"
   }
 }

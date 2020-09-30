@@ -1,86 +1,34 @@
 {
+  "boot": {
+    "type": "qemu"
+  },
   "compose-request": {
     "distro": "fedora-33",
     "arch": "x86_64",
+    "image-type": "vmdk",
+    "filename": "disk.vmdk",
+    "blueprint": {
+      "name": "vmdk-boot-test",
+      "description": "Image for boot test",
+      "packages": [],
+      "modules": [],
+      "groups": [],
+      "customizations": {
+        "user": [
+          {
+            "name": "redhat",
+            "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC61wMCjOSHwbVb4VfVyl5sn497qW4PsdQ7Ty7aD6wDNZ/QjjULkDV/yW5WjDlDQ7UqFH0Sr7vywjqDizUAqK7zM5FsUKsUXWHWwg/ehKg8j9xKcMv11AkFoUoujtfAujnKODkk58XSA9whPr7qcw3vPrmog680pnMSzf9LC7J6kXfs6lkoKfBh9VnlxusCrw2yg0qI1fHAZBLPx7mW6+me71QZsS6sVz8v8KXyrXsKTdnF50FjzHcK9HXDBtSJS5wA3fkcRYymJe0o6WMWNdgSRVpoSiWaHHmFgdMUJaYoCfhXzyl7LtNb3Q+Sveg+tJK7JaRXBLMUllOlJ6ll5Hod root@localhost"
+          }
+        ]
+      }
+    },
     "repositories": [
       {
         "baseurl": "http://mirrors.kernel.org/fedora/development/33/Everything/x86_64/os/",
         "gpgkey": "-----BEGIN PGP PUBLIC KEY BLOCK-----\n\nmQINBF4wBvsBEADQmcGbVUbDRUoXADReRmOOEMeydHghtKC9uRs9YNpGYZIB+bie\nbGYZmflQayfh/wEpO2W/IZfGpHPL42V7SbyvqMjwNls/fnXsCtf4LRofNK8Qd9fN\nkYargc9R7BEz/mwXKMiRQVx+DzkmqGWy2gq4iD0/mCyf5FdJCE40fOWoIGJXaOI1\nTz1vWqKwLS5T0dfmi9U4Tp/XsKOZGvN8oi5h0KmqFk7LEZr1MXarhi2Va86sgxsF\nQcZEKfu5tgD0r00vXzikoSjn3qA5JW5FW07F1pGP4bF5f9J3CZbQyOjTSWMmmfTm\n2d2BURWzaDiJN9twY2yjzkoOMuPdXXvovg7KxLcQerKT+FbKbq8DySJX2rnOA77k\nUG4c9BGf/L1uBkAT8dpHLk6Uf5BfmypxUkydSWT1xfTDnw1MqxO0MsLlAHOR3J7c\noW9kLcOLuCQn1hBEwfZv7VSWBkGXSmKfp0LLIxAFgRtv+Dh+rcMMRdJgKr1V3FU+\nrZ1+ZAfYiBpQJFPjv70vx+rGEgS801D3PJxBZUEy4Ic4ZYaKNhK9x9PRQuWcIBuW\n6eTe/6lKWZeyxCumLLdiS75mF2oTcBaWeoc3QxrPRV15eDKeYJMbhnUai/7lSrhs\nEWCkKR1RivgF4slYmtNE5ZPGZ/d61zjwn2xi4xNJVs8q9WRPMpHp0vCyMwARAQAB\ntDFGZWRvcmEgKDMzKSA8ZmVkb3JhLTMzLXByaW1hcnlAZmVkb3JhcHJvamVjdC5v\ncmc+iQI4BBMBAgAiBQJeMAb7AhsPBgsJCAcDAgYVCAIJCgsEFgIDAQIeAQIXgAAK\nCRBJ/XdJlXD/MZm2D/9kriL43vd3+0DNMeA82n2v9mSR2PQqKny39xNlYPyy/1yZ\nP/KXoa4NYSCA971LSd7lv4n/h5bEKgGHxZfttfOzOnWMVSSTfjRyM/df/NNzTUEV\n7ORA5GW18g8PEtS7uRxVBf3cLvWu5q+8jmqES5HqTAdGVcuIFQeBXFN8Gy1Jinuz\nAH8rJSdkUeZ0cehWbERq80BWM9dhad5dW+/+Gv0foFBvP15viwhWqajr8V0B8es+\n2/tHI0k86FAujV5i0rrXl5UOoLilO57QQNDZH/qW9GsHwVI+2yecLstpUNLq+EZC\nGqTZCYoxYRpl0gAMbDLztSL/8Bc0tJrCRG3tavJotFYlgUK60XnXlQzRkh9rgsfT\nEXbQifWdQMMogzjCJr0hzJ+V1d0iozdUxB2ZEgTjukOvatkB77DY1FPZRkSFIQs+\nfdcjazDIBLIxwJu5QwvTNW8lOLnJ46g4sf1WJoUdNTbR0BaC7HHj1inVWi0p7IuN\n66EPGzJOSjLK+vW+J0ncPDEgLCV74RF/0nR5fVTdrmiopPrzFuguHf9S9gYI3Zun\nYl8FJUu4kRO6JPPTicUXWX+8XZmE94aK14RCJL23nOSi8T1eW8JLW43dCBRO8QUE\nAso1t2pypm/1zZexJdOV8yGME3g5l2W6PLgpz58DBECgqc/kda+VWgEAp7rO2A==\n=EPL3\n-----END PGP PUBLIC KEY BLOCK-----\n",
         "check_gpg": true
       }
-    ],
-    "image-type": "qcow2",
-    "filename": "disk.qcow2",
-    "blueprint": {
-      "packages": [
-        {
-          "name": "bash",
-          "version": "*"
-        }
-      ],
-      "groups": [
-        {
-          "name": "core"
-        }
-      ],
-      "customizations": {
-        "hosname": "my-host",
-        "kernel": {
-          "append": "debug"
-        },
-        "sshkey": [
-          {
-            "user": "user1",
-            "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC61wMCjOSHwbVb4VfVyl5sn497qW4PsdQ7Ty7aD6wDNZ/QjjULkDV/yW5WjDlDQ7UqFH0Sr7vywjqDizUAqK7zM5FsUKsUXWHWwg/ehKg8j9xKcMv11AkFoUoujtfAujnKODkk58XSA9whPr7qcw3vPrmog680pnMSzf9LC7J6kXfs6lkoKfBh9VnlxusCrw2yg0qI1fHAZBLPx7mW6+me71QZsS6sVz8v8KXyrXsKTdnF50FjzHcK9HXDBtSJS5wA3fkcRYymJe0o6WMWNdgSRVpoSiWaHHmFgdMUJaYoCfhXzyl7LtNb3Q+Sveg+tJK7JaRXBLMUllOlJ6ll5Hod root@localhost"
-          }
-        ],
-        "user": [
-          {
-            "name": "user2",
-            "description": "description 2",
-            "password": "$6$BhyxFBgrEFh0VrPJ$MllG8auiU26x2pmzL4.1maHzPHrA.4gTdCvlATFp8HJU9UPee4zCS9BVl2HOzKaUYD/zEm8r/OF05F2icWB0K/",
-            "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC61wMCjOSHwbVb4VfVyl5sn497qW4PsdQ7Ty7aD6wDNZ/QjjULkDV/yW5WjDlDQ7UqFH0Sr7vywjqDizUAqK7zM5FsUKsUXWHWwg/ehKg8j9xKcMv11AkFoUoujtfAujnKODkk58XSA9whPr7qcw3vPrmog680pnMSzf9LC7J6kXfs6lkoKfBh9VnlxusCrw2yg0qI1fHAZBLPx7mW6+me71QZsS6sVz8v8KXyrXsKTdnF50FjzHcK9HXDBtSJS5wA3fkcRYymJe0o6WMWNdgSRVpoSiWaHHmFgdMUJaYoCfhXzyl7LtNb3Q+Sveg+tJK7JaRXBLMUllOlJ6ll5Hod root@localhost",
-            "home": "/home/home2",
-            "shell": "/bin/sh",
-            "groups": [
-              "group1"
-            ],
-            "uid": 1020,
-            "gid": 1050
-          }
-        ],
-        "group": [
-          {
-            "name": "group1",
-            "gid": 1030
-          },
-          {
-            "name": "group2",
-            "gid": 1050
-          }
-        ],
-        "timezone": {
-          "timezone": "Europe/London",
-          "ntpservers": [
-            "time.example.com"
-          ]
-        },
-        "locale": {
-          "languages": [
-            "en_US"
-          ],
-          "keyboard": "dvorak"
-        },
-        "services": {
-          "enabled": [
-            "sshd.socket"
-          ],
-          "disabled": [
-            "bluetooth.service"
-          ]
-        }
-      }
-    }
+    ]
   },
   "manifest": {
     "sources": {
@@ -3468,12 +3416,6 @@
           }
         },
         {
-          "name": "org.osbuild.keymap",
-          "options": {
-            "keymap": "dvorak"
-          }
-        },
-        {
           "name": "org.osbuild.hostname",
           "options": {
             "hostname": "localhost.localdomain"
@@ -3482,49 +3424,14 @@
         {
           "name": "org.osbuild.timezone",
           "options": {
-            "zone": "Europe/London"
-          }
-        },
-        {
-          "name": "org.osbuild.chrony",
-          "options": {
-            "timeservers": [
-              "time.example.com"
-            ]
-          }
-        },
-        {
-          "name": "org.osbuild.groups",
-          "options": {
-            "groups": {
-              "group1": {
-                "name": "group1",
-                "gid": 1030
-              },
-              "group2": {
-                "name": "group2",
-                "gid": 1050
-              }
-            }
+            "zone": "UTC"
           }
         },
         {
           "name": "org.osbuild.users",
           "options": {
             "users": {
-              "user1": {
-                "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC61wMCjOSHwbVb4VfVyl5sn497qW4PsdQ7Ty7aD6wDNZ/QjjULkDV/yW5WjDlDQ7UqFH0Sr7vywjqDizUAqK7zM5FsUKsUXWHWwg/ehKg8j9xKcMv11AkFoUoujtfAujnKODkk58XSA9whPr7qcw3vPrmog680pnMSzf9LC7J6kXfs6lkoKfBh9VnlxusCrw2yg0qI1fHAZBLPx7mW6+me71QZsS6sVz8v8KXyrXsKTdnF50FjzHcK9HXDBtSJS5wA3fkcRYymJe0o6WMWNdgSRVpoSiWaHHmFgdMUJaYoCfhXzyl7LtNb3Q+Sveg+tJK7JaRXBLMUllOlJ6ll5Hod root@localhost"
-              },
-              "user2": {
-                "uid": 1020,
-                "gid": 1050,
-                "groups": [
-                  "group1"
-                ],
-                "description": "description 2",
-                "home": "/home/home2",
-                "shell": "/bin/sh",
-                "password": "$6$BhyxFBgrEFh0VrPJ$MllG8auiU26x2pmzL4.1maHzPHrA.4gTdCvlATFp8HJU9UPee4zCS9BVl2HOzKaUYD/zEm8r/OF05F2icWB0K/",
+              "redhat": {
                 "key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC61wMCjOSHwbVb4VfVyl5sn497qW4PsdQ7Ty7aD6wDNZ/QjjULkDV/yW5WjDlDQ7UqFH0Sr7vywjqDizUAqK7zM5FsUKsUXWHWwg/ehKg8j9xKcMv11AkFoUoujtfAujnKODkk58XSA9whPr7qcw3vPrmog680pnMSzf9LC7J6kXfs6lkoKfBh9VnlxusCrw2yg0qI1fHAZBLPx7mW6+me71QZsS6sVz8v8KXyrXsKTdnF50FjzHcK9HXDBtSJS5wA3fkcRYymJe0o6WMWNdgSRVpoSiWaHHmFgdMUJaYoCfhXzyl7LtNb3Q+Sveg+tJK7JaRXBLMUllOlJ6ll5Hod root@localhost"
               }
             }
@@ -3549,7 +3456,6 @@
           "name": "org.osbuild.grub2",
           "options": {
             "root_fs_uuid": "76a22bf4-f153-4541-b6c7-0332c0dfaeac",
-            "kernel_opts": " debug",
             "legacy": "i386-pc"
           }
         },
@@ -3564,11 +3470,7 @@
               "cloud-init.service",
               "cloud-config.service",
               "cloud-final.service",
-              "cloud-init-local.service",
-              "sshd.socket"
-            ],
-            "disabled_services": [
-              "bluetooth.service"
+              "cloud-init-local.service"
             ]
           }
         },
@@ -3582,8 +3484,8 @@
       "assembler": {
         "name": "org.osbuild.qemu",
         "options": {
-          "format": "qcow2",
-          "filename": "disk.qcow2",
+          "format": "vmdk",
+          "filename": "disk.vmdk",
           "size": 2147483648,
           "ptuuid": "0x14fc63d2",
           "pttype": "mbr",
@@ -9313,7 +9215,7 @@
   },
   "image-info": {
     "boot-environment": {
-      "kernelopts": "root=UUID=76a22bf4-f153-4541-b6c7-0332c0dfaeac  debug"
+      "kernelopts": "root=UUID=76a22bf4-f153-4541-b6c7-0332c0dfaeac"
     },
     "bootloader": "grub",
     "bootmenu": [
@@ -9351,8 +9253,6 @@
       "floppy:x:19:",
       "ftp:x:50:",
       "games:x:20:",
-      "group1:x:1030:user2",
-      "group2:x:1050:",
       "input:x:999:",
       "kmem:x:9:",
       "kvm:x:36:",
@@ -9362,6 +9262,7 @@
       "man:x:15:",
       "mem:x:8:",
       "nobody:x:65534:",
+      "redhat:x:1000:",
       "render:x:998:",
       "root:x:0:",
       "ssh_keys:x:995:",
@@ -9376,7 +9277,6 @@
       "tss:x:59:",
       "tty:x:5:",
       "unbound:x:994:",
-      "user1:x:1000:",
       "users:x:100:",
       "utempter:x:35:",
       "utmp:x:22:",
@@ -9384,7 +9284,7 @@
       "wheel:x:10:"
     ],
     "hostname": "localhost.localdomain",
-    "image-format": "qcow2",
+    "image-format": "vmdk",
     "os-release": {
       "ANSI_COLOR": "0;38;2;60;110;180",
       "BUG_REPORT_URL": "https://bugzilla.redhat.com/",
@@ -9780,6 +9680,7 @@
       "mail:x:8:12:mail:/var/spool/mail:/sbin/nologin",
       "nobody:x:65534:65534:Kernel Overflow User:/:/sbin/nologin",
       "operator:x:11:0:operator:/root:/sbin/nologin",
+      "redhat:x:1000:1000::/home/redhat:/bin/bash",
       "root:x:0:0:root:/root:/bin/bash",
       "shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown",
       "sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin",
@@ -9789,15 +9690,12 @@
       "systemd-resolve:x:193:193:systemd Resolver:/:/sbin/nologin",
       "systemd-timesync:x:998:996:systemd Time Synchronization:/:/sbin/nologin",
       "tss:x:59:59:Account used for TPM access:/dev/null:/sbin/nologin",
-      "unbound:x:997:994:Unbound DNS resolver:/etc/unbound:/sbin/nologin",
-      "user1:x:1000:1000::/home/user1:/bin/bash",
-      "user2:x:1020:1050:description 2:/home/home2:/bin/sh"
+      "unbound:x:997:994:Unbound DNS resolver:/etc/unbound:/sbin/nologin"
     ],
     "rpm-verify": {
       "changed": {
         "/boot/System.map-5.8.11-300.fc33.x86_64": ".M.......",
         "/boot/initramfs-5.8.11-300.fc33.x86_64.img": ".M.......",
-        "/etc/chrony.conf": "S.5....T.",
         "/etc/udev/hwdb.bin": ".M.......",
         "/lib/modules/5.8.11-300.fc33.x86_64/modules.builtin.alias.bin": ".......T.",
         "/proc": ".M.......",
@@ -9833,6 +9731,7 @@
       "remote-cryptsetup.target",
       "serial-getty@.service",
       "sshd-keygen@.service",
+      "sshd.socket",
       "sssd-autofs.socket",
       "sssd-nss.socket",
       "sssd-pac.socket",
@@ -9871,7 +9770,6 @@
       "rpmdb-rebuild.service",
       "selinux-autorelabel-mark.service",
       "sshd.service",
-      "sshd.socket",
       "sssd-kcm.socket",
       "sssd.service",
       "systemd-homed.service",
@@ -9879,6 +9777,6 @@
       "systemd-userdbd.socket",
       "unbound-anchor.timer"
     ],
-    "timezone": "London"
+    "timezone": "UTC"
   }
 }
