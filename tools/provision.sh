@@ -18,6 +18,10 @@ case "${ID}-${VERSION_ID}" in
         # Override old rhel-8.json and rhel-8-beta.json because test needs latest systemd and redhat-release
         sudo cp /usr/share/tests/osbuild-composer/repositories/rhel-83.json /etc/osbuild-composer/repositories/rhel-8.json
         sudo ln -s /etc/osbuild-composer/repositories/rhel-8.json /etc/osbuild-composer/repositories/rhel-8-beta.json;;
+    "rhel-8.4")
+        # Override old rhel-8.json and rhel-8-beta.json because RHEL 8.4 test needs nightly repos
+        sudo cp /usr/share/tests/osbuild-composer/repositories/rhel-84.json /etc/osbuild-composer/repositories/rhel-8.json
+        sudo ln -s /etc/osbuild-composer/repositories/rhel-8.json /etc/osbuild-composer/repositories/rhel-8-beta.json;;
     *) ;;
 esac
 

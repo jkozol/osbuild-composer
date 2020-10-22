@@ -25,6 +25,11 @@ case "${ID}-${VERSION_ID}" in
         OSTREE_REF="rhel/8/${ARCH}/edge"
         OS_VARIANT="rhel8-unknown"
         BOOT_LOCATION="http://download.devel.redhat.com/rhel-8/rel-eng/RHEL-8/latest-RHEL-8.3/compose/BaseOS/x86_64/os/";;
+    "rhel-8.4")
+        IMAGE_TYPE=rhel-edge-commit
+        OSTREE_REF="rhel/8/${ARCH}/edge"
+        OS_VARIANT="rhel8-unknown"
+        BOOT_LOCATION="http://download.devel.redhat.com/rhel-8/nightly/RHEL-8/latest-RHEL-8.4/compose/BaseOS/x86_64/os/";;
     *) ;;
 esac
 

@@ -15,6 +15,10 @@ DISTRO_REPOS = {
     "rhel-8": [
         {"baseurl": "http://download.devel.redhat.com/released/RHEL-8/8.2.0/BaseOS/x86_64/os/"},
         {"baseurl": "http://download.devel.redhat.com/released/RHEL-8/8.2.0/AppStream/x86_64/os/"},
+    ],
+    "rhel-84": [
+        {"baseurl": "http://download.devel.redhat.com/nightly/rhel-8/RHEL-8/latest-RHEL-8.4/compose/BaseOS/x86_64/os/"},
+        {"baseurl": "http://download.devel.redhat.com/nightly/rhel-8/RHEL-8/latest-RHEL-8.4/compose/AppStream/x86_64/os/"},
     ]
 }
 
