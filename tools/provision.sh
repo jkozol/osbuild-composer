@@ -1,16 +1,25 @@
 #!/bin/bash
 set -euxo pipefail
 
+source /etc/os-release
+
 sudo mkdir -p /etc/osbuild-composer
 sudo cp -a /usr/share/tests/osbuild-composer/composer/*.toml \
     /etc/osbuild-composer/
 
-
-# Copy Fedora rpmrepo snapshots for use in weldr tests. RHEL's are usually more
-# stable, and not available publically from rpmrepo.
+# Copy rpmrepo snapshots for use in weldr tests
 sudo mkdir -p /etc/osbuild-composer/repositories
+# Copy all fedora repo overrides
 sudo cp -a /usr/share/tests/osbuild-composer/repositories/fedora-*.json \
     /etc/osbuild-composer/repositories/
+# RHEL repos need to be overriden in rhel-8.json and rhel-8-beta.json
+case "${ID}-${VERSION_ID}" in
+    "rhel-8.3")
+        # Override old rhel-8.json and rhel-8-beta.json because test needs latest systemd and redhat-release
+        sudo cp /usr/share/tests/osbuild-composer/repositories/rhel-83.json /etc/osbuild-composer/repositories/rhel-8.json
+        sudo ln -s /etc/osbuild-composer/repositories/rhel-8.json /etc/osbuild-composer/repositories/rhel-8-beta.json;;
+    *) ;;
+esac
 
 sudo cp -a /usr/share/tests/osbuild-composer/ca/* \
     /etc/osbuild-composer/

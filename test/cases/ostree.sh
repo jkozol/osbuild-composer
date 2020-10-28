@@ -21,9 +21,6 @@ case "${ID}-${VERSION_ID}" in
         OS_VARIANT="fedora32"
         BOOT_LOCATION="https://mirrors.rit.edu/fedora/fedora/linux/releases/32/Everything/x86_64/os/";;
     "rhel-8.3")
-        # Override old rhel-8-beta.json because test needs latest systemd and redhat-release
-        sudo cp /usr/share/tests/osbuild-composer/repositories/rhel-8-beta.json /etc/osbuild-composer/repositories/
-        sudo systemctl restart osbuild-composer.socket
         IMAGE_TYPE=rhel-edge-commit
         OSTREE_REF="rhel/8/${ARCH}/edge"
         OS_VARIANT="rhel8-unknown"
