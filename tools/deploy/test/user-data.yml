@@ -9,6 +9,16 @@ yum_repos:
     baseurl: "http://10.0.2.2:8000"
     enabled: true
     gpgcheck: false
+  rhel-8-baseos:
+    name: "rhel-8-baseos"
+    baseurl: "http://download.devel.redhat.com/rhel-8/rel-eng/RHEL-8/latest-RHEL-8/compose/BaseOS/x86_64/os/"
+    enabled: true
+    gpgcheck: false
+  rhel-8-appstream:
+    name: "rhel-8-appstream"
+    baseurl: "http://download.devel.redhat.com/rhel-8/rel-eng/RHEL-8/latest-RHEL-8/compose/AppStream/x86_64/os/"
+    enabled: true
+    gpgcheck: false
 user: admin
 password: foobar
 ssh_pwauth: True
