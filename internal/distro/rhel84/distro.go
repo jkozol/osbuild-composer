@@ -956,6 +956,7 @@ func New() distro.Distro {
 			"libertas-sd8686-firmware",
 			"libertas-sd8787-firmware",
 			"libertas-usb8388-firmware",
+			"net-tools",
 			"nss",
 			"plymouth",
 			"rng-tools",
